@@ -1,0 +1,236 @@
+/* --- GLOBAL MOBILE MENU --- */
+
+/* The hamburger button */
+.mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--gold-primary, #D4AF37);
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    z-index: 10002;
+    position: relative;
+    padding: 0;
+    margin-left: 10px;
+}
+
+.mobile-menu-btn svg {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu-btn.open svg {
+    transform: rotate(90deg);
+}
+
+.mobile-menu-btn.open .line1 { opacity: 0; }
+.mobile-menu-btn.open .line2 { transform: translateY(6px) rotate(45deg); transform-origin: center; }
+.mobile-menu-btn.open .line3 { transform: translateY(-6px) rotate(-45deg); transform-origin: center; }
+
+/* The dark overlay behind the menu */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.mobile-menu-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ============================================================
+   MOBILE RULES — max-width: 850px
+   ============================================================ */
+@media (max-width: 850px) {
+
+    /* 1. Prevent the entire page from scrolling sideways */
+    html {
+        overflow-x: hidden !important;
+    }
+    body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        position: relative !important;
+    }
+
+    /* 2. Show hamburger button */
+    .mobile-menu-btn {
+        display: block !important;
+    }
+
+    /* 3. Nav menu panel — starts translated OFF screen to the right.
+          Using transform (not right:-100%) so overflow-x:hidden on <html>
+          properly clips it and it is invisible when closed. */
+    .nav-menu-wrapper {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 80% !important;
+        max-width: 320px !important;
+        height: 100vh !important;
+        background: rgba(8, 8, 8, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-left: 1px solid rgba(212, 175, 55, 0.25) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        padding-top: 90px !important;
+        box-shadow: -8px 0 40px rgba(0, 0, 0, 0.9) !important;
+        margin: 0 !important;
+        z-index: 10001 !important;
+        /* KEY FIX: start off-screen via transform, NOT via right:-100% */
+        transform: translateX(100%) !important;
+        transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+
+    /* 4. Panel slides in when open */
+    .nav-menu-wrapper.open {
+        transform: translateX(0) !important;
+    }
+    
+    .nav-links {
+        position: static !important;
+        transform: none !important;
+        flex-direction: column !important;
+        display: flex !important;
+        gap: 2.5rem !important;
+        text-align: center !important;
+        margin-bottom: 4rem !important;
+        width: 100% !important;
+        left: auto !important;
+    }
+    
+    .nav-links a {
+        font-size: 1.3rem !important;
+        letter-spacing: 2px !important;
+        display: block !important;
+        width: 100% !important;
+        padding: 10px 0 !important;
+    }
+    
+    .lang-tog-wrapper {
+        display: flex !important;
+        justify-content: center !important;
+        width: 100% !important;
+        margin-top: auto !important;
+        margin-bottom: 50px !important;
+    }
+    
+    .lang-tog {
+        transform: scale(1.2) !important;
+    }
+}
+\n
+/* --- GLOBAL MOBILE RESPONSIVENESS FIXES --- */
+@media (max-width: 850px) {
+    html, body { overflow-x: hidden !important; width: 100% !important; max-width: 100% !important; }
+    .overlay { padding: 10px !important; align-items: center !important; justify-content: center !important; }
+    .modal { width: 100% !important; max-width: 100% !important; margin: 0 !important; border-radius: 12px !important; max-height: 90vh !important; }
+    .modal-bd { padding: 15px !important; }
+    .fgrid { grid-template-columns: 1fr !important; gap: 15px !important; }
+    .pay-btn-row { flex-direction: column !important; gap: 10px !important; }
+    .bundle-row { flex-direction: column !important; align-items: flex-start !important; gap: 15px !important; }
+    .bundle-stepper { width: 100% !important; justify-content: space-between !important; }
+    #mcp-interac-box, .success { width: 95% !important; margin: 0 auto !important; padding: 15px !important; }
+    #mcp-int-email { word-wrap: break-word !important; word-break: break-all !important; }
+    .packs-grid { grid-template-columns: 1fr !important; padding: 0 10px !important; }
+}
+
+/* ============================================================
+   MOBILE TOOLTIP FIX — Centered popup on small screens
+   Touch the ? icon: the tooltip appears fixed & centered.
+   Desktop is completely unaffected.
+   ============================================================ */
+@media (max-width: 850px) {
+    /* Override the absolute positioning to a centered fixed panel */
+    .tooltip-box {
+        position: fixed !important;
+        /* Center horizontally */
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        /* Position in the upper-middle area of the screen */
+        top: 80px !important;
+        bottom: auto !important;
+        /* Cap width so it never touches screen edges */
+        width: 90vw !important;
+        max-width: 340px !important;
+        /* Reset the desktop entrance animation offset */
+        transition: opacity 0.25s ease, visibility 0.25s ease !important;
+        z-index: 99999 !important;
+    }
+
+    /* When open (toggled by JS on tap), make it visible */
+    .tooltip-box.open {
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: translateX(-50%) !important;
+    }
+
+    /* Remove the bottom arrow — it points nowhere in fixed mode */
+    .tooltip-box::after {
+        display: none !important;
+    }
+
+    /* Make the ? icon respond to tap instead of hover */
+    .tooltip-container:hover .tooltip-box {
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}
+
+
+/* ==========================================================================
+   SECURITY: ANTI-COPY & ANTI-THEFT
+   ========================================================================== */
+body.secure-mode {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+/* Exception pour les informations vitales (adresse de paiement, codes) */
+.allow-copy {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+    cursor: text !important;
+}
+
+/* Bloquer le drag and drop des images, sauf exceptions */
+body.secure-mode img:not(.allow-copy) {
+    -webkit-user-drag: none !important;
+    -khtml-user-drag: none !important;
+    -moz-user-drag: none !important;
+    -o-user-drag: none !important;
+    user-drag: none !important;
+    pointer-events: none; /* Empeche clic droit et drag sur mobile */
+}
+
+/* Autoriser le clic sur les boutons contenant des images/icones */
+button img, a img {
+    pointer-events: auto !important;
+}
+
+
+/* Assurer que les images autorisees restent cliquables (QR codes) */
+body.secure-mode img.allow-copy {
+    pointer-events: auto !important;
+    cursor: zoom-in !important;
+}
