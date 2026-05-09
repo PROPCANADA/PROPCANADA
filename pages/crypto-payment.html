@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide Paiement Crypto — PROP CANADA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #09090e;
+    --surface: #12131f;
+    --surface2: #1a1b2e;
+    --border: rgba(212,175,55,0.12);
+    --border-hover: rgba(212,175,55,0.28);
+    --text: #ece8d9;
+    --muted: #8a8070;
+    --teal: #00c896;
+    --teal-dim: rgba(0,200,150,0.12);
+    --teal-border: rgba(0,200,150,0.3);
+    --amber: #f5a623;
+    --amber-dim: rgba(245,166,35,0.1);
+    --amber-border: rgba(245,166,35,0.3);
+    --red: #ff5c5c;
+    --red-dim: rgba(255,92,92,0.1);
+    --red-border: rgba(255,92,92,0.3);
+    --blue: #5b9cf6;
+    --blue-dim: rgba(91,156,246,0.1);
+    --blue-border: rgba(91,156,246,0.25);
+    --purple: #a78bfa;
+    --gold: #d4af37;
+    --gold-primary: #d4af37;
+    --gold-bright: #f0c040;
+    --gold-dim: rgba(212,175,55,0.1);
+    --gold-border: rgba(212,175,55,0.3);
+    --gold-gradient: linear-gradient(135deg, #d4af37, #f0c040, #b8962e);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(212,175,55,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 80% 80%, rgba(212,175,55,0.07) 0%, transparent 50%);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 3rem;
+    line-height: 1.6;
+  }
+
+  /* Gold shimmer animation */
+  @keyframes shimmer {
+    0%   { opacity: 0.4; transform: translateX(-100%); }
+    100% { opacity: 0; transform: translateX(100%); }
+  }
+  .gold-shimmer-line {
+    position: fixed; top: 0; left: 0; width: 100%; height: 2px;
+    background: var(--gold-gradient);
+    box-shadow: 0 0 20px rgba(212,175,55,0.6), 0 0 60px rgba(212,175,55,0.2);
+    z-index: 100;
+  }
+
+  /* Gold dust canvas */
+  #gold-dust {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows clicking through the canvas */
+    z-index: 1; /* Below content but above background */
+  }
+
+  .widget {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* ── Top bar ── */
+  .top-bar {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 20px;
+    background: rgba(9,9,14,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--gold-gradient);
+    color: #0a0800;
+    border: none; border-radius: 8px;
+    padding: 11px 22px;
+    font-family: var(--font); font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; text-decoration: none;
+    box-shadow: 0 0 18px rgba(212,175,55,0.35), 0 2px 8px rgba(0,0,0,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .btn-back:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 28px rgba(212,175,55,0.55), 0 4px 16px rgba(0,0,0,0.5);
+  }
+  .btn-back:active { transform: translateY(0); }
+  /* ── Language toggle ── */
+  .lang-toggle {
+    display: flex;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .lang-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 5px 14px;
+    border-radius: 99px;
+    transition: background 0.2s, color 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .lang-btn.active {
+    background: var(--gold-gradient);
+    color: #0a0800;
+  }
+
+  /* EN/FR visibility */
+  .en, .fr { display: none; }
+  body.lang-en .en { display: revert; }
+  body.lang-fr .fr { display: revert; }
+  /* inline spans */
+  span.en, span.fr { display: inline; }
+  body.lang-en span.fr { display: none; }
+  body.lang-fr span.en { display: none; }
+
+  /* ── Header ── */
+  .widget-header { margin-bottom: 1.5rem; }
+  .widget-header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .widget-header h1 svg { flex-shrink: 0; }
+  .widget-header p { font-size: 0.85rem; color: var(--muted); margin-left: 28px; }
+
+  /* ── Coin pills ── */
+  .coin-pills {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .coin-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    flex: 1;
+    min-width: 200px;
+  }
+  .coin-pill-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .coin-pill-icon.btc { background: rgba(247,147,26,0.15); border: 1px solid rgba(247,147,26,0.3); }
+  .coin-pill-icon.zec { background: var(--gold-dim); border: 1px solid var(--gold-border); }
+  .coin-pill-meta { flex: 1; }
+  .coin-pill-name { font-weight: 600; font-size: 0.88rem; color: var(--text); }
+  .coin-pill-desc { font-size: 0.74rem; color: var(--muted); margin-top: 1px; line-height: 1.4; }
+  .coin-pill .badge { align-self: flex-start; margin-top: 2px; }
+
+  /* ── Zcash privacy box ── */
+  .zcash-box {
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+  .zcash-box-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .zcash-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  @media (max-width: 520px) { .zcash-grid { grid-template-columns: 1fr; } }
+  .zcash-card {
+    background: rgba(240,192,64,0.06);
+    border: 1px solid rgba(240,192,64,0.18);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+  }
+  .zcash-card-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .zcash-card p { font-size: 0.79rem; color: #f0d890; line-height: 1.5; }
+  .zcash-card strong { color: #fde68a; }
+  .zcash-box > p { font-size: 0.82rem; color: #f0d890; line-height: 1.55; margin-top: 8px; }
+  .zcash-box > p strong { color: #fde68a; font-weight: 600; }
+
+  /* ── Freeze banner ── */
+  .freeze-banner {
+    background: var(--red-dim);
+    border: 1px solid var(--red-border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+  .freeze-banner-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .freeze-banner p { font-size: 0.82rem; color: #ffb3b3; line-height: 1.5; margin-bottom: 6px; }
+  .freeze-banner p:last-child { margin-bottom: 0; }
+  .freeze-banner strong { color: #ffcfcf; font-weight: 600; }
+
+  /* ── Safety box ── */
+  .safety-box {
+    background: var(--amber-dim);
+    border: 1px solid var(--amber-border);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+  .safety-box-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .safety-rules { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .safety-rules li {
+    font-size: 0.83rem;
+    color: #f5d08a;
+    padding-left: 1.1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+  .safety-rules li::before { content: '→'; position: absolute; left: 0; color: var(--amber); font-weight: 600; }
+  .safety-rules strong { color: #fde68a; font-weight: 600; }
+
+  /* ── Fee table ── */
+  .fee-compare {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+  .fee-compare-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 10px 14px 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .fee-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+  .fee-table th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.69rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 7px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .fee-table td { padding: 8px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .fee-table tr:last-child td { border-bottom: none; }
+  .fee-table .method-name { font-weight: 500; color: var(--text); font-size: 0.82rem; }
+  .fee-table .fee-val { font-family: var(--mono); font-size: 0.78rem; }
+  .fee-high { color: var(--red); }
+  .fee-mid { color: var(--amber); }
+  .fee-low { color: var(--teal); }
+  .fee-table .delay-val { color: var(--muted); font-size: 0.78rem; }
+
+  /* ── Section label ── */
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+
+  /* ── Accordion ── */
+  .accordion { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1.25rem; }
+  .acc-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .acc-item:hover { border-color: var(--border-hover); box-shadow: 0 0 12px rgba(212,175,55,0.08); }
+  .acc-item.open { border-color: rgba(212,175,55,0.4); box-shadow: 0 0 20px rgba(212,175,55,0.1); }
+  .acc-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    color: var(--text);
+  }
+  .acc-icon-wrap {
+    width: 34px; height: 34px;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 1.1rem;
+  }
+  .acc-meta { flex: 1; min-width: 0; }
+  .acc-title { font-size: 0.92rem; font-weight: 600; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .acc-subtitle { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+  .badge {
+    font-size: 0.68rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 99px; letter-spacing: 0.03em;
+  }
+  .badge-teal { background: var(--teal-dim); color: var(--teal); border: 1px solid var(--teal-border); }
+  .badge-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue-border); }
+  .badge-amber { background: var(--amber-dim); color: var(--amber); border: 1px solid var(--amber-border); }
+  .badge-purple { background: rgba(167,139,250,0.1); color: var(--purple); border: 1px solid rgba(167,139,250,0.3); }
+  .acc-chevron { flex-shrink: 0; color: var(--muted); transition: transform 0.25s ease; }
+  .acc-item.open .acc-chevron { transform: rotate(180deg); }
+  .acc-panel { display: none; padding: 0 16px 16px; border-top: 1px solid var(--border); }
+  .acc-item.open .acc-panel { display: block; }
+
+  /* ── Steps ── */
+  .steps { display: flex; flex-direction: column; gap: 0; margin-top: 12px; }
+  .step { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1px solid var(--border-hover);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; font-weight: 600; color: var(--muted);
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .step-body { flex: 1; }
+  .step-title { font-size: 0.875rem; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+  .step-detail { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .step-detail strong { color: #c5cad6; font-weight: 500; }
+
+  /* ── Link chips ── */
+  .links-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .link-chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.75rem; font-weight: 500;
+    color: var(--blue); background: var(--blue-dim);
+    border: 1px solid var(--blue-border);
+    border-radius: var(--radius-sm); padding: 4px 10px;
+    text-decoration: none; transition: background 0.15s;
+  }
+  .link-chip:hover { background: rgba(91,156,246,0.18); }
+  .link-chip svg { flex-shrink: 0; }
+  .link-chip.teal-chip { color: var(--teal); background: rgba(0,200,150,0.08); border-color: rgba(0,200,150,0.3); }
+  .link-chip.teal-chip:hover { background: rgba(0,200,150,0.18); }
+
+  /* ── Panel warnings ── */
+  .panel-warn {
+    margin-top: 12px; padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.78rem; line-height: 1.5;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .panel-warn svg { flex-shrink: 0; margin-top: 1px; }
+  .panel-warn.amber { background: var(--amber-dim); border: 1px solid var(--amber-border); color: #f5d08a; }
+  .panel-warn.red { background: var(--red-dim); border: 1px solid var(--red-border); color: #ffb3b3; }
+  .panel-warn.teal { background: var(--teal-dim); border: 1px solid var(--teal-border); color: #7de8c8; }
+  .panel-warn.gold { background: var(--gold-dim); border: 1px solid var(--gold-border); color: #f0d890; }
+
+  /* ── Exchange table ── */
+  .exchange-table {
+    width: 100%; border-collapse: collapse; font-size: 0.76rem;
+    margin-top: 12px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); overflow: hidden;
+  }
+  .exchange-table th {
+    text-align: left; font-weight: 600; font-size: 0.68rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--muted); padding: 6px 10px;
+    border-bottom: 1px solid var(--border); background: var(--surface2);
+  }
+  .exchange-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+  .exchange-table tr:last-child td { border-bottom: none; }
+  .exchange-table .exch-name { font-weight: 600; }
+  .exchange-table .exch-fees { font-family: var(--mono); font-size: 0.73rem; color: var(--teal); }
+  .exchange-table .exch-note { color: var(--muted); font-size: 0.73rem; }
+  .exchange-table a { color: var(--blue); text-decoration: none; }
+  .exchange-table a:hover { text-decoration: underline; }
+
+  /* ── Network table ── */
+  .network-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 10px; }
+  .network-table th {
+    text-align: left; font-weight: 600; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--border);
+  }
+  .network-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .network-table tr:last-child td { border-bottom: none; }
+  .coin-name { font-weight: 600; font-family: var(--mono); font-size: 0.78rem; color: var(--text); }
+  .net-name { color: var(--muted); font-size: 0.78rem; }
+  .net-name em { color: var(--teal); font-style: normal; font-weight: 500; }
+
+  /* ── Track box ── */
+  .track-box {
+    background: var(--teal-dim); border: 1px solid var(--teal-border);
+    border-radius: var(--radius); padding: 1rem 1.1rem;
+  }
+  .track-box-title {
+    font-size: 0.8rem; font-weight: 600; color: var(--teal);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    display: flex; align-items: center; gap: 6px; margin-bottom: 8px;
+  }
+  .track-box p { font-size: 0.82rem; color: #7de8c8; line-height: 1.5; margin-bottom: 8px; }
+  .track-box p:last-of-type { margin-bottom: 10px; }
+  .track-box .links-row { margin-top: 0; }
+
+  /* ── Footer ── */
+  .footer-note {
+    margin-top: 1.25rem; font-size: 0.75rem;
+    color: var(--muted); text-align: center; line-height: 1.5;
+  }
+
+  /* Icon colors */
+  .icon-teal { background: var(--teal-dim); }
+  .icon-blue { background: var(--blue-dim); }
+  .icon-amber { background: var(--amber-dim); }
+  .icon-purple { background: rgba(167,139,250,0.1); }
+
+  @media (max-width: 520px) {
+    .acc-title { font-size: 0.85rem; }
+    .acc-subtitle { font-size: 0.74rem; }
+    .fee-table th, .fee-table td { padding: 7px 10px; }
+    .coin-pills { flex-direction: column; }
+  }
+</style>
+</head>
+<body class="lang-en">
+
+<!-- Gold top line -->
+<div class="gold-shimmer-line"></div>
+
+<!-- Gold dust canvas background -->
+<canvas id="gold-dust"></canvas>
+
+<!-- Sticky top bar: back button + language -->
+<div class="top-bar" style="position:relative; z-index:50;">
+  <a href="../index.html" class="btn-back">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    <span class="en">← Back to Shop</span>
+    <span class="fr">← Retour à la boutique</span>
+  </a>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
+  </div>
+</div>
+
+<div class="widget" style="position:relative; z-index:10;">
+
+  <!-- Accepted coins -->
+  <div class="coin-pills">
+    <div class="coin-pill">
+      <div class="coin-pill-icon btc">₿</div>
+      <div class="coin-pill-meta">
+        <div class="coin-pill-name">Bitcoin <span style="font-family:var(--mono);font-size:0.75rem;color:var(--muted)">BTC</span></div>
+        <div class="coin-pill-desc en">The world's leading cryptocurrency. Decentralized, transparent, widely supported.</div>
+        <div class="coin-pill-desc fr">La cryptomonnaie n°1 mondiale. Décentralisée, transparente, universellement supportée.</div>
+      </div>
+    </div>
+    <div class="coin-pill">
+      <div class="coin-pill-icon zec">🛡</div>
+      <div class="coin-pill-meta">
+        <div class="coin-pill-name">Zcash <span style="font-family:var(--mono);font-size:0.75rem;color:var(--muted)">ZEC</span></div>
+        <div class="coin-pill-desc en">100% private cryptocurrency. Shielded transactions leave no trace on the public blockchain.</div>
+        <div class="coin-pill-desc fr">Cryptomonnaie 100 % privée. Les transactions blindées ne laissent aucune trace publique.</div>
+      </div>
+      <span class="badge badge-purple en" style="align-self:center">Private</span>
+      <span class="badge badge-purple fr" style="align-self:center">Privé</span>
+    </div>
+  </div>
+
+  <!-- Zcash privacy box -->
+  <div class="zcash-box">
+    <div class="zcash-box-title">
+      🛡
+      <span class="en">Zcash — 100% Private Currency</span>
+      <span class="fr">Zcash — Monnaie 100 % Privée</span>
+    </div>
+    <div class="zcash-grid">
+      <div class="zcash-card">
+        <div class="zcash-card-label en">🔐 Shielded Transactions</div>
+        <div class="zcash-card-label fr">🔐 Transactions Blindées</div>
+        <p class="en">When you use a <strong>shielded (z-address)</strong>, the sender, receiver, and amount are all hidden. Unlike Bitcoin, there is no public record.</p>
+        <p class="fr">Avec une <strong>adresse blindée (z-address)</strong>, l'expéditeur, le destinataire et le montant sont tous cachés. Contrairement au Bitcoin, aucune trace publique.</p>
+      </div>
+      <div class="zcash-card">
+        <div class="zcash-card-label en">⚡ zk-SNARKs Technology</div>
+        <div class="zcash-card-label fr">⚡ Technologie zk-SNARKs</div>
+        <p class="en">Zcash uses <strong>zero-knowledge proofs</strong> — the transaction is verified as valid without revealing any details. Privacy by math, not by trust.</p>
+        <p class="fr">Zcash utilise des <strong>preuves à connaissance nulle</strong> — la transaction est vérifiée sans divulguer aucun détail. Confidentialité par les maths, pas par la confiance.</p>
+      </div>
+      <div class="zcash-card">
+        <div class="zcash-card-label en">👁 Two Address Types</div>
+        <div class="zcash-card-label fr">👁 Deux types d'adresses</div>
+        <p class="en"><strong>z-address (shielded):</strong> fully private — recommended. <strong>t-address (transparent):</strong> works like Bitcoin — visible on-chain. Always use a z-address for maximum privacy.</p>
+        <p class="fr"><strong>z-address (blindée) :</strong> totalement privée — recommandée. <strong>t-address (transparente) :</strong> fonctionne comme Bitcoin — visible en chaîne. Toujours utiliser une z-address pour la confidentialité maximale.</p>
+      </div>
+      <div class="zcash-card">
+        <div class="zcash-card-label en">🏦 Where to Buy ZEC in Canada</div>
+        <div class="zcash-card-label fr">🏦 Où acheter du ZEC au Canada</div>
+        <p class="en"><strong>Kraken</strong> and <strong>Coinbase</strong> (if account is already active and verified). Zcash is not available on most Canadian-only apps like Shakepay.</p>
+        <p class="fr"><strong>Kraken</strong> et <strong>Coinbase</strong> (si compte déjà actif et vérifié). Zcash n'est pas disponible sur la plupart des apps canadiennes comme Shakepay.</p>
+      </div>
+    </div>
+    <p class="en">⚠️ <strong>Important:</strong> To send a shielded Zcash transaction, you must use a wallet that supports z-addresses, such as <strong>Zashi</strong> (official Zcash wallet) or <strong>YWallet</strong>. Standard wallets like Trust Wallet only support transparent t-addresses.</p>
+    <p class="fr">⚠️ <strong>Important :</strong> Pour envoyer une transaction Zcash blindée, vous devez utiliser un portefeuille compatible z-addresses, comme <strong>Zashi</strong> (portefeuille officiel Zcash) ou <strong>YWallet</strong>. Les portefeuilles standard comme Trust Wallet ne supportent que les adresses transparentes (t-address).</p>
+  </div>
+
+  <!-- Frozen funds warning -->
+  <div class="freeze-banner">
+    <div class="freeze-banner-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span class="en">Warning: Funds Hold Risk</span>
+      <span class="fr">Attention : Gel des fonds possible</span>
+    </div>
+    <p class="en">Major international platforms <strong>(Coinbase, Kraken)</strong> often impose a hold of <strong>3 to 7 days</strong> on first deposits by card or bank transfer.</p>
+    <p class="fr">Les grandes plateformes internationales <strong>(Coinbase, Kraken)</strong> imposent souvent un délai de rétention de <strong>3 à 7 jours</strong> sur vos premiers dépôts.</p>
+    <p class="en">For an <strong>immediate payment today</strong>: use a <strong>Bitcoin ATM</strong> (method 1) or a Canadian app with <strong>Interac e-Transfer</strong> (method 2). Avoid EFT/Wire transfers and credit cards. Note: most Canadian apps <strong>do not support Zcash</strong> — for ZEC, use an existing Kraken or Coinbase account.</p>
+    <p class="fr">Pour un paiement <strong>immédiat aujourd'hui</strong> : utilisez un <strong>Guichet ATM Bitcoin</strong> (méthode 1) ou une application canadienne avec <strong>Virement Interac</strong> (méthode 2). Note : la plupart des apps canadiennes <strong>ne supportent pas Zcash</strong> — pour ZEC, utilisez un compte Kraken ou Coinbase existant.</p>
+  </div>
+
+  <!-- Safety rules -->
+  <div class="safety-box">
+    <div class="safety-box-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span class="en">Golden Rules — Read Before Sending</span>
+      <span class="fr">Règles d'or — à lire avant d'envoyer</span>
+    </div>
+    <ul class="safety-rules">
+      <li class="en"><strong>Never type the address manually.</strong> Always use "Copy" or scan the QR code. One wrong character = funds lost forever, with no recourse.</li>
+      <li class="fr"><strong>Ne jamais taper l'adresse à la main.</strong> Toujours utiliser « Copier » ou scanner le Code QR. Une seule erreur = fonds perdus à jamais, sans recours.</li>
+      <li class="en"><strong>Check the blockchain network.</strong> See the table below. Sending on the wrong network = total and permanent loss.</li>
+      <li class="fr"><strong>Vérifiez le réseau blockchain.</strong> Voir le tableau ci-dessous. Envoyer sur le mauvais réseau = perte totale et irrémédiable.</li>
+      <li class="en"><strong>Account for network fees (Gas).</strong> Add a few dollars so the exact amount received matches your invoice.</li>
+      <li class="fr"><strong>Prévoyez les frais de réseau (Gas).</strong> Ajoutez quelques dollars pour que le montant exact reçu corresponde à votre facture.</li>
+      <li class="en"><strong>Do a test first.</strong> If this is your first transaction, send $5 and confirm receipt before sending the full amount.</li>
+      <li class="fr"><strong>Faites d'abord un test.</strong> Si c'est votre première transaction, envoyez 5 $ et vérifiez la réception avant d'envoyer le montant total.</li>
+    </ul>
+  </div>
+
+  <!-- Fee comparison table -->
+  <div class="fee-compare">
+    <div class="fee-compare-title">
+      <span class="en">Method Comparison — Fees &amp; Delays</span>
+      <span class="fr">Comparatif des méthodes — frais et délais</span>
+    </div>
+    <table class="fee-table">
+      <thead>
+        <tr>
+          <th><span class="en">Method</span><span class="fr">Méthode</span></th>
+          <th><span class="en">Typical Fees</span><span class="fr">Frais typiques</span></th>
+          <th><span class="en">Delay</span><span class="fr">Délai</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="method-name">🏧 <span class="en">Bitcoin ATM</span><span class="fr">Guichet ATM Bitcoin</span></span></td>
+          <td><span class="fee-val fee-high">8 – 25%</span></td>
+          <td><span class="delay-val en">Instant (10–40 min confirmation)</span><span class="delay-val fr">Immédiat (10–40 min confirmation)</span></td>
+        </tr>
+        <tr>
+          <td><span class="method-name">📱 <span class="en">Canadian App (Interac) — BTC only</span><span class="fr">App canadienne (Interac) — BTC seulement</span></span></td>
+          <td><span class="fee-val fee-mid">1 – 3%</span></td>
+          <td><span class="delay-val">15 – 60 min</span></td>
+        </tr>
+        <tr>
+          <td><span class="method-name">💻 <span class="en">Regulated Exchange (existing account)</span><span class="fr">Échange réglementé (compte existant)</span></span></td>
+          <td><span class="fee-val fee-low">0.1 – 0.5%</span></td>
+          <td><span class="delay-val en">Instant if account verified</span><span class="delay-val fr">Immédiat si compte vérifié</span></td>
+        </tr>
+        <tr>
+          <td><span class="method-name">🔐 <span class="en">Existing wallet</span><span class="fr">Portefeuille existant</span></span></td>
+          <td><span class="fee-val fee-low en">Network fees only</span><span class="fee-val fee-low fr">Frais réseau seulement</span></td>
+          <td><span class="delay-val en">Instant (a few minutes)</span><span class="delay-val fr">Immédiat (quelques minutes)</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section label -->
+  <div class="section-label en">Choose your payment method</div>
+  <div class="section-label fr">Choisissez votre méthode de paiement</div>
+
+  <!-- Accordion -->
+  <div class="accordion">
+
+    <!-- Method 1: ATM -->
+    <div class="acc-item" id="item-1">
+      <button class="acc-trigger" onclick="toggle(1)" aria-expanded="false">
+        <div class="acc-icon-wrap icon-teal">🏧</div>
+        <div class="acc-meta">
+          <div class="acc-title">
+            <span class="en">Bitcoin ATM</span>
+            <span class="fr">Guichet ATM Bitcoin</span>
+            <span class="badge badge-teal en">⚡ Fastest</span>
+            <span class="badge badge-teal fr">⚡ Le plus rapide</span>
+            <span class="badge badge-teal en">Beginner-friendly</span>
+            <span class="badge badge-teal fr">Recommandé débutants</span>
+          </div>
+          <div class="acc-subtitle en">Cash — no bank account required, no delay · Bitcoin only</div>
+          <div class="acc-subtitle fr">En espèces — aucun compte bancaire requis, zéro délai · Bitcoin uniquement</div>
+        </div>
+        <svg class="acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="acc-panel">
+        <div class="panel-warn gold">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="en">Bitcoin ATMs dispense <strong>Bitcoin (BTC) only</strong>. If you need to pay with Zcash, use Method 3 (regulated exchange with an existing account).</span>
+          <span class="fr">Les guichets ATM Bitcoin distribuent <strong>Bitcoin (BTC) uniquement</strong>. Pour payer en Zcash, utilisez la méthode 3 (échange réglementé avec compte existant).</span>
+        </div>
+        <div class="panel-warn teal" style="margin-top:8px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="en">No banking delay. Transaction confirmed in 10 to 40 minutes. No account, no verification for amounts under $1,000 CAD.</span>
+          <span class="fr">Aucun délai bancaire. Confirmation en 10 à 40 minutes. Pas de compte, pas de vérification pour les montants sous 1 000 $ CAD.</span>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title en">Find the nearest ATM</div>
+              <div class="step-title fr">Trouvez le guichet le plus proche</div>
+              <div class="step-detail en">Use the interactive maps below. In Quebec: often in convenience stores, pharmacies, or malls. Minimum purchase as low as $20 CAD depending on operator.</div>
+              <div class="step-detail fr">Utilisez les cartes interactives ci-dessous. Au Québec : souvent dans les dépanneurs, pharmacies ou centres commerciaux. Achat minimum aussi bas que 20 $ CAD selon l'opérateur.</div>
+              <div class="links-row">
+                <a href="https://coinatmradar.com/country/38/bitcoin-atm-canada/" target="_blank" rel="noopener" class="link-chip">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  Coin ATM Radar — Canada
+                </a>
+                <a href="https://www.instacoinatm.com/points-de-service.html" target="_blank" rel="noopener" class="link-chip">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  Instacoin — 168 QC/Canada
+                </a>
+                <a href="https://localcoinatm.com/fr-ca/" target="_blank" rel="noopener" class="link-chip">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  Localcoin — 950+ Canada
+                </a>
+                <a href="https://bitcoinwell.com/atm" target="_blank" rel="noopener" class="link-chip">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  Bitcoin Well
+                </a>
+                <a href="https://honeybadger.com/atm-locations" target="_blank" rel="noopener" class="link-chip">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  HoneyBadger
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title en">Install a Bitcoin wallet on your phone</div>
+              <div class="step-title fr">Installez un portefeuille Bitcoin sur votre téléphone</div>
+              <div class="step-detail en">Download <strong>Trust Wallet</strong> or <strong>Coinbase Wallet</strong> (App Store / Google Play). Write down your recovery phrase (12 words) somewhere safe — never share it.</div>
+              <div class="step-detail fr">Téléchargez <strong>Trust Wallet</strong> ou <strong>Coinbase Wallet</strong> (App Store / Google Play). Notez votre phrase de récupération (12 mots) dans un endroit sûr — ne la partagez jamais.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title en">Get your wallet QR code ready</div>
+              <div class="step-title fr">Préparez votre code QR de portefeuille</div>
+              <div class="step-detail en">In the app, tap <strong>"Receive"</strong> and select Bitcoin. Keep this QR code visible on your screen — you'll need it at the ATM.</div>
+              <div class="step-detail fr">Dans l'app, appuyez sur <strong>« Recevoir »</strong> et sélectionnez Bitcoin. Gardez ce code QR affiché sur votre téléphone — vous en aurez besoin au guichet.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title en">At the ATM: select "Buy"</div>
+              <div class="step-title fr">Au guichet : sélectionnez « Acheter »</div>
+              <div class="step-detail en">Scan your QR code at the reader window. Insert your Canadian dollar bills. The total is shown after each bill. <strong>Confirm.</strong></div>
+              <div class="step-detail fr">Scannez votre code QR à la fenêtre du lecteur. Insérez vos billets en dollars canadiens. Le total s'affiche après chaque billet. <strong>Confirmez.</strong></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <div class="step-title en">Send to the merchant from your wallet</div>
+              <div class="step-title fr">Envoyez ensuite au commerçant depuis votre portefeuille</div>
+              <div class="step-detail en">Wait for the Bitcoin to arrive in your app (2–10 min). Tap <strong>"Send"</strong>, scan or paste our payment address, enter the exact amount, confirm. Do not close your order before confirmation.</div>
+              <div class="step-detail fr">Attendez la réception dans votre app (2–10 min). Appuyez sur <strong>« Envoyer »</strong>, scannez ou collez notre adresse, entrez le montant exact, confirmez. Ne fermez pas votre commande avant la confirmation.</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-warn amber">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span class="en"><strong>Fees:</strong> typically 8–25% above the current price depending on the operator and machine. Check the rate displayed on screen before inserting cash — it varies by machine.</span>
+          <span class="fr"><strong>Frais :</strong> typiquement 8–25% au-dessus du prix courant selon l'opérateur et la machine. Vérifiez le taux affiché à l'écran avant d'insérer votre argent.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Method 2: Canadian apps -->
+    <div class="acc-item" id="item-2">
+      <button class="acc-trigger" onclick="toggle(2)" aria-expanded="false">
+        <div class="acc-icon-wrap icon-blue">📱</div>
+        <div class="acc-meta">
+          <div class="acc-title">
+            <span class="en">Canadian App — Interac e-Transfer</span>
+            <span class="fr">Application canadienne — Interac</span>
+            <span class="badge badge-blue en">Easy</span>
+            <span class="badge badge-blue fr">Facile</span>
+          </div>
+          <div class="acc-subtitle en">Shakepay, Newton or Bull Bitcoin — from home, Bitcoin only</div>
+          <div class="acc-subtitle fr">Shakepay, Newton ou Bull Bitcoin — depuis chez vous, Bitcoin seulement</div>
+        </div>
+        <svg class="acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="acc-panel">
+        <div class="panel-warn gold">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="en"><strong>Bitcoin only for this method.</strong> Canadian apps (Shakepay, Newton, Bull Bitcoin) do not support Zcash. For ZEC, use Method 3.</span>
+          <span class="fr"><strong>Bitcoin uniquement pour cette méthode.</strong> Les apps canadiennes (Shakepay, Newton, Bull Bitcoin) ne supportent pas Zcash. Pour ZEC, utilisez la méthode 3.</span>
+        </div>
+        <div class="panel-warn teal" style="margin-top:8px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="en">Regulated platforms in Canada (FINTRAC). Via Interac e-Transfer: funds generally available in <strong>15 to 60 minutes</strong>.</span>
+          <span class="fr">Plateformes réglementées au Canada (CANAFE). Via Virement Interac : fonds généralement disponibles en <strong>15 à 60 minutes</strong>.</span>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title en">Download the app and create your account</div>
+              <div class="step-title fr">Téléchargez l'app et créez votre compte</div>
+              <div class="step-detail en">Identity verification required (ID + selfie). Allow 5 to 15 minutes. Do this in advance if possible.</div>
+              <div class="step-detail fr">Vérification d'identité requise (pièce d'identité + selfie). Comptez 5 à 15 min. À faire en avance si possible.</div>
+              <div class="links-row">
+                <a href="https://shakepay.com" target="_blank" rel="noopener" class="link-chip">Shakepay (BTC)</a>
+                <a href="https://bullbitcoin.com" target="_blank" rel="noopener" class="link-chip">Bull Bitcoin (BTC)</a>
+                <a href="https://www.newton.co" target="_blank" rel="noopener" class="link-chip">Newton (BTC + more)</a>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title en">Deposit funds via Interac e-Transfer</div>
+              <div class="step-title fr">Déposez des fonds via Virement Interac</div>
+              <div class="step-detail en">In the app, copy the Interac email address provided. Send a transfer from your regular bank account. <strong>Do not use a credit card</strong> — Canadian banks treat it as a cash advance (high fees + possible block). Do not use EFT/Wire transfers either (3–5 day delay).</div>
+              <div class="step-detail fr">Dans l'app, copiez l'adresse courriel Interac fournie. Faites un virement depuis votre compte bancaire habituel. <strong>N'utilisez pas de carte de crédit</strong> — les banques canadiennes le traitent comme une avance de fonds. N'utilisez pas les virements EFT/Wire non plus (délai 3–5 jours).</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title en">Buy Bitcoin</div>
+              <div class="step-title fr">Achetez des Bitcoins</div>
+              <div class="step-detail en">Once CAD is credited, select Bitcoin. Enter the amount. Fees are built into the rate (~1–2% spread).</div>
+              <div class="step-detail fr">Une fois les CAD crédités, sélectionnez Bitcoin. Entrez le montant. Les frais sont intégrés dans le taux (~1–2% de spread).</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title en">Send directly to the merchant</div>
+              <div class="step-title fr">Envoyez directement au commerçant</div>
+              <div class="step-detail en">Tap <strong>"Send"</strong>. Scan or paste our address. Check the network. Enter the exact amount. <strong>Confirm.</strong></div>
+              <div class="step-detail fr">Appuyez sur <strong>« Envoyer »</strong>. Scannez ou collez notre adresse. Vérifiez le réseau. Entrez le montant exact. <strong>Confirmez.</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-warn amber">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span class="en"><strong>Shakepay:</strong> BTC only. <strong>Newton:</strong> 60+ cryptos (no ZEC), zero deposit/withdrawal fees. <strong>Bull Bitcoin:</strong> BTC only, Canadian specialist. If your bank blocks the first Interac transfer, a call to their security team may be needed.</span>
+          <span class="fr"><strong>Shakepay :</strong> BTC uniquement. <strong>Newton :</strong> +60 cryptos (pas de ZEC), zéro frais dépôt/retrait. <strong>Bull Bitcoin :</strong> BTC uniquement, spécialiste canadien. Si votre banque bloque le premier transfert Interac, un appel à leur service de sécurité peut être nécessaire.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Method 3: Exchange — BTC + ZEC -->
+    <div class="acc-item" id="item-3">
+      <button class="acc-trigger" onclick="toggle(3)" aria-expanded="false">
+        <div class="acc-icon-wrap icon-amber">💻</div>
+        <div class="acc-meta">
+          <div class="acc-title">
+            <span class="en">Regulated Exchange — Bitcoin or Zcash</span>
+            <span class="fr">Plateforme d'échange — Bitcoin ou Zcash</span>
+            <span class="badge badge-amber en">Intermediate</span>
+            <span class="badge badge-amber fr">Intermédiaire</span>
+            <span class="badge badge-purple en">✦ Zcash available</span>
+            <span class="badge badge-purple fr">✦ Zcash disponible</span>
+          </div>
+          <div class="acc-subtitle en">Bitbuy, NDAX, Kraken, Coinbase — existing verified account required</div>
+          <div class="acc-subtitle fr">Bitbuy, NDAX, Kraken, Coinbase — compte existant et vérifié requis</div>
+        </div>
+        <svg class="acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="acc-panel">
+        <div class="panel-warn red">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span class="en"><strong>Risk of frozen funds:</strong> first transactions on these platforms are often held for 3 to 7 days. Only use this method if you already have an active, verified account with available funds.</span>
+          <span class="fr"><strong>Risque de gel des fonds :</strong> les premières transactions sur ces plateformes sont souvent retenues 3 à 7 jours. N'utilisez cette méthode que si vous avez déjà un compte actif et vérifié avec des fonds disponibles.</span>
+        </div>
+
+        <table class="exchange-table">
+          <thead>
+            <tr>
+              <th><span class="en">Platform</span><span class="fr">Plateforme</span></th>
+              <th><span class="en">Fees</span><span class="fr">Frais</span></th>
+              <th>BTC</th>
+              <th>ZEC</th>
+              <th><span class="en">Notes</span><span class="fr">Notes</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="exch-name"><a href="https://bitbuy.ca" target="_blank" rel="noopener">Bitbuy</a></span></td>
+              <td><span class="exch-fees">0.1–0.5%</span></td>
+              <td style="color:var(--teal);font-weight:600">✓</td>
+              <td style="color:var(--red)">✗</td>
+              <td><span class="exch-note en">100% Canadian, FINTRAC/CSA</span><span class="exch-note fr">100% canadien, CANAFE/ACVM</span></td>
+            </tr>
+            <tr>
+              <td><span class="exch-name"><a href="https://ndax.io" target="_blank" rel="noopener">NDAX</a></span></td>
+              <td><span class="exch-fees">0.2%</span></td>
+              <td style="color:var(--teal);font-weight:600">✓</td>
+              <td style="color:var(--red)">✗</td>
+              <td><span class="exch-note en">Active traders, low fees</span><span class="exch-note fr">Traders actifs, frais bas</span></td>
+            </tr>
+            <tr>
+              <td><span class="exch-name"><a href="https://www.kraken.com" target="_blank" rel="noopener">Kraken</a></span></td>
+              <td><span class="exch-fees">0.16–0.26%</span></td>
+              <td style="color:var(--teal);font-weight:600">✓</td>
+              <td style="color:var(--teal);font-weight:600">✓</td>
+              <td><span class="exch-note en">If account already active &amp; verified</span><span class="exch-note fr">Si compte déjà actif et vérifié</span></td>
+            </tr>
+            <tr>
+              <td><span class="exch-name"><a href="https://www.coinbase.com" target="_blank" rel="noopener">Coinbase</a></span></td>
+              <td><span class="exch-fees">0.5–1.5%</span></td>
+              <td style="color:var(--teal);font-weight:600">✓</td>
+              <td style="color:var(--teal);font-weight:600">✓</td>
+              <td><span class="exch-note en">If account already active &amp; verified</span><span class="exch-note fr">Si compte déjà actif et vérifié</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="steps" style="margin-top:0">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title en">Log in to your account</div>
+              <div class="step-title fr">Connectez-vous à votre compte</div>
+              <div class="step-detail en">Make sure your account is verified (KYC) and your funds are already available (not in a hold period). For Zcash: <strong>Kraken or Coinbase</strong> only. For Bitcoin only: Bitbuy or NDAX are 100% Canadian options.</div>
+              <div class="step-detail fr">Assurez-vous que votre compte est vérifié (KYC) et que vos fonds sont disponibles (pas en période de rétention). Pour Zcash : <strong>Kraken ou Coinbase</strong> uniquement. Pour Bitcoin seul : Bitbuy ou NDAX sont des options 100% canadiennes.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title en">Buy the required cryptocurrency</div>
+              <div class="step-title fr">Achetez la cryptomonnaie requise</div>
+              <div class="step-detail en">"Buy/Sell" or "Spot" tab. Enter the CAD amount. Typical fees: 0.1 to 1.5% depending on platform.</div>
+              <div class="step-detail fr">Section « Acheter/Vendre » ou onglet « Spot ». Entrez le montant en CAD. Frais typiques : 0,1 à 1,5% selon la plateforme.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title en">Withdraw to our payment address</div>
+              <div class="step-title fr">Retirez vers notre adresse de paiement</div>
+              <div class="step-detail en">"<strong>Withdraw</strong>" section. Select the cryptocurrency and <strong>the correct blockchain network</strong> (see table below). Paste our address. Check the first 4 and last 4 characters. Confirm with your 2FA. <strong>For Zcash: always select the Zcash network (not EVM).</strong></div>
+              <div class="step-detail fr">Section <strong>« Retirer »</strong>. Sélectionnez la cryptomonnaie et <strong>le bon réseau blockchain</strong>. Collez notre adresse. Vérifiez les 4 premiers et 4 derniers caractères. Confirmez avec votre 2FA. <strong>Pour Zcash : sélectionnez toujours le réseau Zcash (pas EVM).</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-warn amber">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span class="en">Always choose the <strong>correct blockchain network</strong> when withdrawing — wrong network = permanently lost funds, even if the address looks right.</span>
+          <span class="fr">Choisissez <strong>toujours le bon réseau blockchain</strong> lors du retrait — un mauvais réseau signifie des fonds définitivement perdus, même si l'adresse semble correcte.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Method 4: Existing wallet -->
+    <div class="acc-item" id="item-4">
+      <button class="acc-trigger" onclick="toggle(4)" aria-expanded="false">
+        <div class="acc-icon-wrap icon-purple">🔐</div>
+        <div class="acc-meta">
+          <div class="acc-title">
+            <span class="en">Personal Wallet — You Already Have Crypto</span>
+            <span class="fr">Portefeuille personnel existant</span>
+            <span class="badge badge-purple en">Advanced</span>
+            <span class="badge badge-purple fr">Avancé</span>
+          </div>
+          <div class="acc-subtitle en">Trust Wallet, Zashi, Ledger, Exodus — send directly</div>
+          <div class="acc-subtitle fr">Trust Wallet, Zashi, Ledger, Exodus — envoi direct</div>
+        </div>
+        <svg class="acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="acc-panel">
+        <div class="panel-warn gold">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <span class="en"><strong>Zcash wallet requirement:</strong> To send shielded ZEC (z-address), your wallet must support it. Use <strong>Zashi</strong> (official, iOS/Android) or <strong>YWallet</strong>. Standard wallets (Trust Wallet, MetaMask) only support transparent Zcash (t-address).</span>
+          <span class="fr"><strong>Portefeuille Zcash :</strong> Pour envoyer du ZEC blindé (z-address), votre portefeuille doit le supporter. Utilisez <strong>Zashi</strong> (officiel, iOS/Android) ou <strong>YWallet</strong>. Les portefeuilles standard (Trust Wallet, MetaMask) ne supportent que les adresses Zcash transparentes (t-address).</span>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title en">Check the required currency and network</div>
+              <div class="step-title fr">Vérifiez la devise et le réseau requis</div>
+              <div class="step-detail en">Confirm which cryptocurrency the merchant accepts and the exact network (see table below). Make sure you have the right asset in your wallet.</div>
+              <div class="step-detail fr">Confirmez la cryptomonnaie acceptée par le commerçant et le réseau exact (voir tableau ci-dessous). Assurez-vous d'avoir le bon actif dans votre portefeuille.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title en">Open your app and tap "Send"</div>
+              <div class="step-title fr">Ouvrez votre app et appuyez « Envoyer »</div>
+              <div class="step-detail en">Whether it's Zashi, Trust Wallet, Ledger Live, or Exodus — the send function works similarly across all apps.</div>
+              <div class="step-detail fr">Que ce soit Zashi, Trust Wallet, Ledger Live ou Exodus — la fonction d'envoi fonctionne de façon similaire.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title en">Scan or paste our payment address</div>
+              <div class="step-title fr">Scannez ou collez notre adresse de paiement</div>
+              <div class="step-detail en">Always prefer <strong>scanning the QR code</strong> to avoid copy-paste errors. If you paste the address, always check the first 4 and last 4 characters.</div>
+              <div class="step-detail fr">Toujours préférer <strong>scanner le QR code</strong> pour éviter les erreurs de copier-coller. Si vous collez l'adresse, vérifiez impérativement les 4 premiers et les 4 derniers caractères.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title en">Enter the amount — mind the network fees</div>
+              <div class="step-title fr">Entrez le montant — attention aux frais de réseau</div>
+              <div class="step-detail en">Your balance must be slightly higher than the amount to send in order to cover <strong>Gas fees</strong> (network fees). These fees vary with blockchain congestion.</div>
+              <div class="step-detail fr">Votre solde doit être légèrement supérieur au montant à envoyer pour couvrir les <strong>Gas fees</strong> (frais réseau). Ces frais varient selon la congestion de la blockchain.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <div class="step-title en">Confirm and save the transaction hash</div>
+              <div class="step-title fr">Confirmez et notez le hash de transaction</div>
+              <div class="step-detail en">The <strong>hash (txid)</strong> is your payment receipt — a long string of letters and numbers. Keep it for any proof-of-payment request.</div>
+              <div class="step-detail fr">Le <strong>hash (txid)</strong> est votre reçu de paiement — une longue chaîne de lettres et chiffres. Conservez-le pour toute demande de preuve.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /accordion -->
+
+  <!-- Network table -->
+  <div class="section-label" style="margin-bottom:8px">
+    <span class="en">Network Table — Send on the Correct Network</span>
+    <span class="fr">Tableau des réseaux — envoyez sur le bon réseau</span>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1.25rem">
+    <table class="network-table">
+      <thead>
+        <tr>
+          <th><span class="en">Cryptocurrency</span><span class="fr">Cryptomonnaie</span></th>
+          <th><span class="en">Network to use</span><span class="fr">Réseau à utiliser</span></th>
+          <th><span class="en">Common mistake to avoid</span><span class="fr">Erreur fréquente à éviter</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="coin-name">BTC</span></td>
+          <td><span class="net-name"><em>Bitcoin</em> (Bitcoin Mainnet)</span></td>
+          <td><span class="net-name en">Never send BTC on an EVM network (ETH)</span><span class="net-name fr">Ne jamais envoyer BTC sur un réseau EVM (ETH)</span></td>
+        </tr>
+        <tr>
+          <td><span class="coin-name" style="color:var(--gold)">ZEC</span></td>
+          <td><span class="net-name"><em style="color:var(--gold)">Zcash</em> (Zcash Mainnet)</span></td>
+          <td><span class="net-name en">Own network — not compatible with EVM. Use z-address for full privacy</span><span class="net-name fr">Réseau propre — incompatible EVM. Utiliser z-address pour la confidentialité maximale</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Track section -->
+  <div class="track-box">
+    <div class="track-box-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span class="en">Track Your Transaction in Real Time</span>
+      <span class="fr">Suivre votre transaction en temps réel</span>
+    </div>
+    <p class="en">Once sent, your transaction appears on the blockchain within seconds. Allow <strong>10 to 40 minutes</strong> for full confirmation. Do not close your order page before visual confirmation.</p>
+    <p class="fr">Une fois envoyée, votre transaction apparaît en quelques secondes sur la blockchain. Comptez <strong>10 à 40 minutes</strong> pour une confirmation complète. Ne fermez pas votre page de commande avant la confirmation visuelle.</p>
+    <p class="en">Paste your sending address or transaction hash into one of these explorers:</p>
+    <p class="fr">Collez votre adresse d'envoi ou votre hash de transaction dans l'un de ces explorateurs :</p>
+    <div class="links-row">
+      <a href="https://mempool.space" target="_blank" rel="noopener" class="link-chip teal-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Mempool.space — Bitcoin
+      </a>
+      <a href="https://zcashblockexplorer.com" target="_blank" rel="noopener" class="link-chip teal-chip">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        ZcashBlockExplorer.com — Zcash
+      </a>
+    </div>
+    <div class="panel-warn gold" style="margin-top:10px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span class="en"><strong>Privacy note (Zcash):</strong> Shielded transactions will <em>not</em> appear in full detail in public explorers — only the transaction ID is visible. This is expected and confirms full privacy protection.</span>
+      <span class="fr"><strong>Note confidentialité (Zcash) :</strong> Les transactions blindées n'apparaîtront <em>pas</em> en détail dans les explorateurs publics — seul le hash de transaction est visible. C'est normal et confirme la protection complète de la vie privée.</span>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <span class="en">This guide is provided for informational purposes. Fees and delays may vary by platform and network congestion.</span>
+    <span class="fr">Ce guide est fourni à titre informatif. Les délais et frais peuvent varier selon les plateformes et la congestion du réseau.</span>
+  </div>
+
+</div>
+
+<script>
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+}
+
+function toggle(id) {
+  const item = document.getElementById('item-' + id);
+  const btn = item.querySelector('.acc-trigger');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(el => {
+    el.classList.remove('open');
+    el.querySelector('.acc-trigger').setAttribute('aria-expanded', 'false');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// Gold Dust Animation Script
+document.addEventListener("DOMContentLoaded", () => {
+  const canvas = document.getElementById("gold-dust");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  let width, height;
+  let particles = [];
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  }
+
+  window.addEventListener("resize", resize);
+  resize();
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+
+    reset() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.size = Math.random() * 1.5 + 0.5;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3 - 0.2;
+      this.opacity = Math.random() * 0.5 + 0.1;
+      this.fadeSpeed = (Math.random() - 0.5) * 0.01;
+
+      const colors = [
+        'rgba(212, 175, 55, OPA)',
+        'rgba(255, 215, 0, OPA)',
+        'rgba(253, 245, 230, OPA)'
+      ];
+      this.colorTemplate = colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      this.opacity += this.fadeSpeed;
+      if (this.opacity >= 0.8 || this.opacity <= 0.1) {
+        this.fadeSpeed *= -1;
+      }
+
+      if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+        this.reset();
+        if (this.y < 0) {
+          this.y = height;
+        }
+      }
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.colorTemplate.replace('OPA', this.opacity.toFixed(2));
+      ctx.fill();
+
+      if (this.size > 1.2) {
+        ctx.shadowBlur = 5;
+        ctx.shadowColor = 'rgba(212, 175, 55, 0.8)';
+      } else {
+        ctx.shadowBlur = 0;
+      }
+    }
+  }
+
+  function init() {
+    particles = [];
+    const numberOfParticles = (width * height) / 10000;
+    for (let i = 0; i < numberOfParticles; i++) {
+      particles.push(new Particle());
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    particles.forEach(particle => {
+      particle.update();
+      particle.draw();
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  init();
+  animate();
+});
+</script>
+</body>
+</html>

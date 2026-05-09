@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /settings.html
+
+Sitemap: https://propcanada.com/sitemap.xml

@@ -1,0 +1,16 @@
+{
+  "name": "Prop Canada",
+  "short_name": "PropCanada",
+  "description": "Premium prop bills canadiens — livraison gratuite au Canada",
+  "start_url": "/PROPCANADA/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#D4AF37",
+  "icons": [
+    {
+      "src": "/PROPCANADA/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}
