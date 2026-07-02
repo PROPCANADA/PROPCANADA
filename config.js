@@ -43,7 +43,7 @@ window.PBS_CONFIG = {
   /* ────────────────────────────────────────────────────────────
      EMAIL INTERAC
   ──────────────────────────────────────────────────────────────*/
-  INTERAC_EMAIL: 'RASPLIMON@gmail.com',
+  INTERAC_EMAIL: 'ghostlimon@outlook.com',
 
   /* ────────────────────────────────────────────────────────────
      WEBHOOK DISCORD (notifications de commandes)

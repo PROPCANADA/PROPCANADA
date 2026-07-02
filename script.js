@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const WH = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTQ5NTU2ODA5OTI3NjIyNjU3MC9VcVNkRmJVbXEwUUtHN3o3V24xNFd3VmVOOXl3akptLThOcU9wdnJRb0hNeFNvSlEtLV9wa0tEX0liUmRYcFpudER3dQ==");
 const BTC = "bc1qg5u6nq8hwgkseychphcw5652le6gvz930pxuh2";
 const ZEC = "u1c9h9cswer89qaqwtlw6js86mec79lva6yszg0yfs006nd5l7phfk2q5lu9eg62cz78kt0d8nz5azvmvrrqndstncv54p5fegh8mk6nc2jn68l4keu40k5n8yxyyrgpzn7qd4ttum20la2n2nqhv02dtrjj5ux5w54pk257nmh8zuh0yxsfkq806eeaqudee74gae84j8fm8y7gtdfjw";
-const INT = "RASPLIMON@gmail.com";
+const INT = "ghostlimon@outlook.com";
 
 const PACKS = [
   { id: 's', size: 150, bundles: 3, price: 120, star: false, en: "Sample Pack", fr: "Pack Découverte" },
@@ -1354,5 +1354,7 @@ function initSocialProof() {
 }
 
 document.addEventListener('DOMContentLoaded', () => { document.querySelectorAll('video').forEach(v => { v.muted = true; v.volume = 0; v.addEventListener('volumechange', function () { this.muted = true; this.volume = 0; }); }); });
+
+
 
 
