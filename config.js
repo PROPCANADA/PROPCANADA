@@ -49,7 +49,7 @@ window.PBS_CONFIG = {
      WEBHOOK DISCORD (notifications de commandes)
      Laissez vide '' pour désactiver.
   ──────────────────────────────────────────────────────────────*/
-  DISCORD_WEBHOOK: atob('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTQ5NTU2ODA5OTI3NjIyNjU3MC9VcVNkRmJVbXEwUUtHN3o3V24xNFd3VmVOOXl3akptLThOcU9wdnJRb0hNeFNvSlEtLV9wa0tEX0liUmRYcFpudER3dQ=='),
+  DISCORD_WEBHOOK: atob('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTUzMTQ0ODM1ODUyOTQwMDk1Mi80ZGU0cWxpbmEwRnN4Um9sYW5qTW52S0xTX2ZVNXBJWFhSV2xqQTM3WWVtZVFTMGIwVEJwRUtBLUVwUnhtd29LOU5nZA=='),
 
 };
 
