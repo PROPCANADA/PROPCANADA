@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const WH = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTQ5NTU2ODA5OTI3NjIyNjU3MC9VcVNkRmJVbXEwUUtHN3o3V24xNFd3VmVOOXl3akptLThOcU9wdnJRb0hNeFNvSlEtLV9wa0tEX0liUmRYcFpudER3dQ==");
 const BTC = "bc1qg5u6nq8hwgkseychphcw5652le6gvz930pxuh2";
 const ZEC = "u1c9h9cswer89qaqwtlw6js86mec79lva6yszg0yfs006nd5l7phfk2q5lu9eg62cz78kt0d8nz5azvmvrrqndstncv54p5fegh8mk6nc2jn68l4keu40k5n8yxyyrgpzn7qd4ttum20la2n2nqhv02dtrjj5ux5w54pk257nmh8zuh0yxsfkq806eeaqudee74gae84j8fm8y7gtdfjw";
-const INT = "ghostlimon@outlook.com";
+const INT = "ghostlimon2@outlook.com";
 
 const PACKS = [
   { id: 's', size: 150, bundles: 3, price: 120, star: false, en: "Sample Pack", fr: "Pack Découverte" },
@@ -158,12 +158,12 @@ const T = {
     heroCta: "Shop Now", heroTg: "Telegram",
     hcLbl: "Why Buyers Choose Us",
     hcn1: "Discreet Packaging", hcs1: "Plain unmarked box — nothing visible outside.",
-    hcn2: "3 Payment Methods", hcs2: "Bitcoin, Zcash or Interac — your choice.",
+    hcn2: "2 Payment Methods", hcs2: "Bitcoin or Interac - your choice.",
     hcn3: "Fully Custom Mix", hcs3: "Full control over every $20/$50/$100 ratio.",
     hcn4: "Purolator Delivery", hcs4: "Reliable carrier, tracked delivery.",
     st1h: "Choose your pack", st1s: "4 sizes available",
     st2h: "Build your mix", st2s: "$20 / $50 / $100 split",
-    st3h: "Pay securely", st3s: "BTC · ZEC · Interac",
+    st3h: "Pay securely", st3s: "BTC • Interac",
     st4h: "We ship fast", st4s: "via Purolator",
     se: "Available Packs", sti: "Choose Your Pack Size",
     sd: "Each pack is fully customizable — assign a denomination ($20, $50 or $100) to each 50-bill bundle. No restrictions.",
@@ -180,13 +180,13 @@ const T = {
     pbOver: t => `Max ${t} bundles — please reduce.`,
     addBtn: "Add to Order",
     mpEye: "Step 3 — Payment", mpTitle: "Choose a Payment Method",
-    bonusLbl: "🎁 Crypto Bonus:", bonusTxt: " Pay in Bitcoin or Zcash and get 1 free 50-bill bundle for every $100 spent. Choose its denomination in the next step.",
+    bonusLbl: "🎁 Crypto Bonus:", bonusTxt: " Pay in Bitcoin and get 1 free 50-bill bundle for every $100 spent. Choose its denomination in the next step.",
     psBtc: "Maximum privacy · Crypto bonus",
     psZec: "Shielded transactions · Crypto bonus",
     psIntH: "Interac e-Transfer", psInt: "Canadian customers · Instant",
     moEye: "Step 4 — Confirm", moTitle: "Contact & Shipping",
     fslC: "Contact Info", fslS: "Shipping Address", fslP: "Payment Instructions",
-    lbExpress: "Express Shipping with Purolator (+$10 CAD)", lbExpress: "Express Shipping with Purolator (+$10 CAD)", lbName: "Full Name", lbEmail: "Email", lbTg: "Telegram",
+    lbExpress: "Express Shipping with Purolator (+$10 CAD)", lbName: "Full Name", lbEmail: "Email", lbTg: "Telegram",
     lbPhone: "Phone Number",
     lbApt: "Apartment / Unit", lbAptOpt: "(optional)",
     lbAddr: "Street Address", lbCity: "City", lbProv: "Province / State",
@@ -198,7 +198,6 @@ const T = {
     tipDeferTitle: "Deferred Delivery",
     tipDeferBody: "If you'd like your order held and delivered on a specific date, check this box and enter the date below. Leave unchecked for the earliest possible delivery.",
     lbDeferDate: "Desired Delivery Date",
-    // Tooltip content — bilingual (EN)
     tipCidTitle: "What is a Client ID?",
     tipCidBody: "Enter your client ID so we can link your order to your file without any error. If you don't have one yet, you'll receive one automatically right after your payment.",
     tipTgTitle: "Why your Telegram?",
@@ -254,7 +253,7 @@ const T = {
     addBtnTxt: "Add to Order",
     payNowTxt: "Pay Now",
     guideToggleTitle: "New to crypto? Read our beginner's guide first",
-    guideToggleSub: "Step-by-step: how to pay in BTC or ZEC quickly, safely and cheaply",
+    guideToggleSub: "Step-by-step: how to pay in BTC quickly, safely and cheaply",
     guideS1Title: "⚠️ Common Mistakes to Avoid",
     guideS2Title: "✅ Easiest Ways to Buy & Send Crypto",
     guideS3Title: "💡 Pro Tips for a Smooth Payment",
@@ -265,7 +264,7 @@ const T = {
     guideStep1Title: "Use a fast, no-frills app",
     guideStep1Desc: "For small purchases, the easiest method is a Bitcoin ATM (find one at coinatmradar.com), or apps like Shakepay (Canada), Bull Bitcoin, or Strike. These allow you to buy and send crypto directly without a long verification wait.",
     guideStep2Title: "Buy only what you need",
-    guideStep2Desc: "Check the live converter below to see exactly how much BTC or ZEC to buy. Buy just a few dollars more than needed to cover network fees.",
+    guideStep2Desc: "Check the live converter below to see exactly how much BTC to buy. Buy just a little extra (e.g. $5-10) to cover network fees.",
     guideStep3Title: "Copy the address carefully",
     guideStep3Desc: "Copy our payment address using the copy button. Open your wallet app, select 'Send', paste the address, enter the amount, and confirm. That's it — no account setup needed on our end.",
     guideStep4Title: "Wait for confirmation",
@@ -286,12 +285,12 @@ const T = {
     heroCta: "Commander", heroTg: "Telegram",
     hcLbl: "Pourquoi nous choisir",
     hcn1: "Emballage discret", hcs1: "Boîte neutre, rien de visible à l'extérieur.",
-    hcn2: "3 moyens de paiement", hcs2: "Bitcoin, Zcash ou Interac — votre choix.",
+    hcn2: "2 moyens de paiement", hcs2: "Bitcoin ou Interac - votre choix.",
     hcn3: "Mix sur mesure", hcs3: "Contrôle total sur la répartition $20/$50/$100.",
     hcn4: "Purolator", hcs4: "Transporteur fiable, livraison suivie.",
     st1h: "Choisissez votre pack", st1s: "4 tailles disponibles",
     st2h: "Construisez votre mix", st2s: "Répartissez $20 / $50 / $100",
-    st3h: "Payez en sécurité", st3s: "BTC · ZEC · Interac",
+    st3h: "Payez en sécurité", st3s: "BTC • Interac",
     st4h: "On expédie vite", st4s: "via Purolator",
     se: "Packs disponibles", sti: "Choisissez votre pack",
     sd: "Chaque pack est entièrement personnalisable — attribuez une coupure ($20, $50 ou $100) à chaque liasse de 50 billets.",
@@ -308,7 +307,7 @@ const T = {
     pbOver: t => `Maximum ${t} liasses — veuillez réduire.`,
     addBtn: "Ajouter à la commande",
     mpEye: "Étape 3 — Paiement", mpTitle: "Choisir un mode de paiement",
-    bonusLbl: "🎁 Bonus crypto :", bonusTxt: " Payez en Bitcoin ou Zcash et recevez 1 liasse gratuite de 50 billets par tranche de 100 $ dépensés. Choisissez la coupure à l'étape suivante.",
+    bonusLbl: "🎁 Bonus crypto :", bonusTxt: " Payez en Bitcoin et recevez 1 liasse gratuite de 50 billets pour chaque 100 $ dépensé. Choisissez sa valeur à l'étape suivante.",
     psBtc: "Confidentialité max · Bonus crypto",
     psZec: "Transactions protégées · Bonus crypto",
     psIntH: "Interac Virement", psInt: "Clients canadiens · Instantané",
@@ -327,7 +326,6 @@ const T = {
     tipDeferBody: "Si vous souhaitez que votre commande soit retenue et livrée à une date précise, cochez cette case et entrez la date ci-dessous. Laissez décoché pour la livraison au plus tôt.",
     lbDeferDate: "Date de livraison souhaitée",
     lbPromo: "Code promo", lbPromoOpt: "(optionnel)",
-    // Textes des info-bulles — bilingues
     tipCidTitle: "À quoi sert votre identifiant ?",
     tipCidBody: "Entrez votre identifiant de client afin que nous puissions associer votre commande à votre dossier sans erreur. Si vous n'en avez pas encore, vous en recevrez un automatiquement après votre paiement.",
     tipTgTitle: "Pourquoi votre Telegram ?",
@@ -382,7 +380,7 @@ const T = {
     addBtnTxt: "Ajouter à la commande",
     payNowTxt: "Payer maintenant",
     guideToggleTitle: "Nouveau en crypto ? Lisez notre guide avant de payer",
-    guideToggleSub: "Étape par étape : comment payer en BTC ou ZEC rapidement, en toute sécurité et à faible coût",
+    guideToggleSub: "Étape par étape : comment payer en BTC rapidement, en toute sécurité et à moindres frais",
     guideS1Title: "⚠️ Erreurs courantes à éviter",
     guideS2Title: "✅ Les moyens les plus simples d'acheter et d'envoyer des cryptos",
     guideS3Title: "💡 Conseils pour un paiement sans accroc",
@@ -393,7 +391,7 @@ const T = {
     guideStep1Title: "Utilisez une app rapide et sans prise de tête",
     guideStep1Desc: "Pour les petits achats, le moyen le plus simple est un guichet Bitcoin (trouvez-en un sur coinatmradar.com), ou des apps comme Shakepay (Canada), Bull Bitcoin ou Strike. Elles permettent d'acheter et d'envoyer des cryptos directement, sans longue attente de vérification.",
     guideStep2Title: "Achetez seulement ce qu'il vous faut",
-    guideStep2Desc: "Consultez le convertisseur en temps réel ci-dessous pour savoir exactement combien de BTC ou ZEC acheter. Achetez quelques dollars de plus pour couvrir les frais de réseau.",
+    guideStep2Desc: "Consultez le convertisseur en temps réel ci-dessous pour savoir exactement combien de BTC acheter. Achetez un peu plus (ex: 5-10$) pour couvrir les frais de réseau.",
     guideStep3Title: "Copiez l'adresse avec soin",
     guideStep3Desc: "Copiez notre adresse de paiement. Ouvrez votre application de portefeuille, sélectionnez « Envoyer », collez l'adresse, entrez le montant et confirmez. C'est tout — aucune configuration de compte requise de notre côté.",
     guideStep4Title: "Attendez la confirmation",
@@ -1077,6 +1075,9 @@ document.getElementById('order-form').addEventListener('submit', async function 
     { name: "Items Ordered", value: cap(items), inline: false },
     { name: "Shipping Address", value: cap(fullAddr), inline: false }
   ];
+  if (clientID) fields.push({ name: "Client ID", value: clientID, inline: true });
+  fields.push({ name: "Signature Required", value: wantsSignature, inline: true });
+  if (deferCheck && deferDate) fields.push({ name: "Defer Shipping", value: deferDate, inline: true });
   if (ctry.toLowerCase() !== 'canada') fields.push({ name: "Carrier", value: "FedEx (International)", inline: true });
   else fields.push({ name: "Carrier", value: "Purolator", inline: true });
   if (isCrypto) fields.push({ name: "Crypto Address", value: cap(payM === 'bitcoin' ? BTC : ZEC), inline: false });
@@ -1123,13 +1124,13 @@ document.getElementById('order-form').addEventListener('submit', async function 
     if (lang === 'fr') {
       document.getElementById('mcp-eye').textContent = 'Étape 5 — Paiement';
       document.getElementById('mcp-title').textContent = 'Envoyer la Cryptomonnaie';
-      document.getElementById('mcp-desc').textContent = 'Veuillez envoyer le montant exact à l\'adresse ci-dessous. Une fois envoyé, prenez une capture d\'écran et confirmez.';
+      document.getElementById('mcp-desc').innerHTML = 'Veuillez envoyer le montant exact à l\'adresse ci-dessous. <br><strong style="color:var(--gold-primary);">Nous recommandons fortement d\'utiliser Shakepay pour un traitement plus rapide.</strong><br> Une fois envoyé, prenez une capture d\'écran et confirmez.';
       document.getElementById('mcp-addr-lbl').textContent = 'Adresse du Portefeuille :';
       const cbtn = document.getElementById('mcp-btn-copy-txt'); if (cbtn) cbtn.textContent = 'Copier';
     } else {
       document.getElementById('mcp-eye').textContent = 'Step 5 — Payment';
       document.getElementById('mcp-title').textContent = 'Send Cryptocurrency';
-      document.getElementById('mcp-desc').textContent = 'Please send the exact amount to the address below. Once sent, take a screenshot and confirm.';
+      document.getElementById('mcp-desc').innerHTML = 'Please send the exact amount to the address below. <br><strong style="color:var(--gold-primary);">We highly recommend using Shakepay for faster processing.</strong><br> Once sent, take a screenshot and confirm.';
       document.getElementById('mcp-addr-lbl').textContent = 'Wallet Address:';
     }
   } else if (isInterac) {

@@ -276,7 +276,7 @@
                 <div id="fc1" style="color:var(--gold-primary); font-weight:bold; margin-bottom:1rem; text-transform:uppercase;">Payments</div>
                 <ul style="list-style:none; padding:0; color:var(--text-muted); line-height:2;">
                     <li>Bitcoin (BTC)</li>
-                    <li>Zcash (ZEC)</li>
+
                     <li id="f-int">Interac e-Transfer (CA)</li>
                 </ul>
             </div>
@@ -345,9 +345,8 @@
       </div>
     </div>
     <div class="modal-bd">
-      <div class="bonus-callout"><strong id="bonus-lbl">🎁 Crypto Bonus:</strong><span id="bonus-txt"> Pay in Bitcoin or Zcash and get 1 free 50-bill bundle for every $100 spent. Choose its denomination in the next step.</span></div>
+      <div class="bonus-callout"><strong id="bonus-lbl">🎁 Crypto Bonus:</strong><span id="bonus-txt"> Pay in Bitcoin and get 1 free 50-bill bundle for every $100 spent. Choose its denomination in the next step.</span></div>
       <button class="popt crypto" onclick="pickPay('bitcoin')"><div class="popt-ico">₿</div><div><span class="popt-title">Bitcoin (BTC)</span><span class="popt-sub" id="ps-btc">Maximum privacy · Crypto bonus</span></div></button>
-      <button class="popt crypto" onclick="pickPay('zcash')"><div class="popt-ico">Ⓩ</div><div><span class="popt-title">Zcash (ZEC)</span><span class="popt-sub" id="ps-zec">Shielded transactions · Crypto bonus</span></div></button>
       <button class="popt interac" onclick="pickPay('interac')"><div class="popt-ico">⇄</div><div><span class="popt-title" id="ps-int-h">Interac e-Transfer</span><span class="popt-sub" id="ps-int">Canadian customers · Instant</span></div></button>
       <button class="btn-cncl" onclick="closePayChoice()">Cancel</button>
     </div>
