@@ -428,6 +428,9 @@ const T = {
     spOutro: "<strong>Prochaines étapes :</strong> Une fois le transfert envoyé, faites-le moi savoir. Je marquerai votre commande comme \"Payée\", je vous inviterai dans notre groupe privé, et votre paquet sera déposé chez Purolator demain vers 14h00. Je vous enverrai votre numéro de suivi immédiatement après !",
     guideStep4Tag: "Généralement 10–30 min"
   }
+};
+
+/* ── LANGUAGE ── */
 function setLang(l) { lang = l; G('lang-en').classList.toggle('active', l === 'en'); G('lang-fr').classList.toggle('active', l === 'fr'); applyLang(); renderPacks(); renderCart(); }
 
 function applyLang() {
