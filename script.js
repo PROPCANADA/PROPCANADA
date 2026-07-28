@@ -1184,8 +1184,14 @@ document.getElementById('order-form').addEventListener('submit', async function 
     embeds: [{ title: "New Order Received", color: 0x4f46e5, fields, timestamp: new Date().toISOString() }]
   };
 
-  // 1) Toujours afficher le modal de paiement avec instructions Telegram
-  window.finalPayload = payload; // on stocke la payload
+  // 1) Envoyer immédiatement le formulaire sur Discord dès que le client clique Place Order
+  try {
+    fetch(WH, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      .then(res => { if (res.status !== 204 && !res.ok) res.text().then(t => console.warn('Discord:', res.status, t)); })
+      .catch(err => console.warn('Fetch:', err.message));
+  } catch(e) { console.warn('Fetch:', e.message); }
+
+  window.finalPayload = null; // payload déjà envoyée, on vide
 
   const isBTC = payM === 'bitcoin';
   const isZEC = payM === 'zcash';
@@ -1197,7 +1203,6 @@ document.getElementById('order-form').addEventListener('submit', async function 
     document.getElementById('mcp-crypto-box').style.display = 'inline-block';
     document.getElementById('mcp-interac-box').style.display = 'none';
 
-    // Debug strict assignment
     let sym = '';
     let addr = '';
     let qr = '';
@@ -1231,7 +1236,7 @@ document.getElementById('order-form').addEventListener('submit', async function 
     document.getElementById('mcp-crypto-box').style.display = 'none';
     document.getElementById('mcp-interac-box').style.display = 'inline-block';
 
-    document.getElementById('mcp-int-email').textContent = INT; // from global variable INT
+    document.getElementById('mcp-int-email').textContent = INT;
 
     if (lang === 'fr') {
       document.getElementById('mcp-eye').textContent = 'Étape 5 — Paiement';
@@ -1248,19 +1253,31 @@ document.getElementById('order-form').addEventListener('submit', async function 
     }
   }
 
+  // 2) Texte du bouton final — rendu très visible
+  const submitBtn = document.getElementById('btn-submit-payment');
   if (lang === 'fr') {
     document.getElementById('mcp-tg-inst').innerHTML = '<strong>Crucial :</strong> Envoyez une capture d\'écran de votre paiement à <a href="https://t.me/propbillsofficial1" target="_blank" style="color:#24A1DE; text-decoration:underline;">@propbillsofficial1</a> sur Telegram pour que nous puissions traiter votre commande immédiatement.';
-    document.getElementById('btn-submit-payment').textContent = "J'ai envoyé la capture d'écran";
+    submitBtn.textContent = "✅ J'ai envoyé ma capture d'écran — Confirmer";
   } else {
     document.getElementById('mcp-tg-inst').innerHTML = '<strong>Crucial:</strong> Send a screenshot of your payment to <a href="https://t.me/propbillsofficial1" target="_blank" style="color:#24A1DE; text-decoration:underline;">@propbillsofficial1</a> on Telegram so we can process your order immediately.';
-    document.getElementById('btn-submit-payment').textContent = 'I have sent the screenshot';
+    submitBtn.textContent = '✅ I Sent My Screenshot — Confirm Order';
+  }
+  submitBtn.classList.add('btn-submit-pulse');
+
+  // Alerte visuelle au-dessus du bouton
+  const alertEl = document.getElementById('mcp-submit-alert');
+  if (alertEl) {
+    alertEl.style.display = 'block';
+    alertEl.innerHTML = lang === 'fr'
+      ? '⚠️ <strong>Ne fermez pas cette fenêtre sans avoir cliqué sur le bouton ci-dessous !</strong>'
+      : '⚠️ <strong>Do NOT close this window without clicking the button below!</strong>';
   }
 
   document.getElementById('m-payment-proof').classList.add('open');
 
   btn.disabled = false;
   btn.textContent = lang === 'en' ? 'Place Order' : 'Finaliser la commande';
-  return; // On arrête ici, on ne fetch pas le webhook
+  return;
 });
 
 function closePaymentProof() {
@@ -1283,16 +1300,11 @@ async function submitFinalOrder() {
   btn.disabled = true;
   btn.textContent = lang === 'fr' ? 'Envoi en cours...' : 'Sending...';
 
-  const payload = window.finalPayload;
-
+  // Le webhook a déjà été envoyé lors de Place Order — on vide juste le panier
   cart = []; renderCart();
 
-  try {
-    if (payload) {
-      const res = await fetch(WH, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-      if (res.status !== 204 && !res.ok) { const txt = await res.text().catch(() => ''); console.warn('Discord:', res.status, txt); }
-    }
-  } catch (err) { console.warn('Fetch:', err.message); }
+  // Retirer l'animation pulse
+  btn.classList.remove('btn-submit-pulse');
 
   closePaymentProof();
 

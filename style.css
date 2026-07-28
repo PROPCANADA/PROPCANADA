@@ -624,6 +624,21 @@ footer {
 .btn-pay-now:hover:not(:disabled) { box-shadow: 0 0 15px rgba(212,175,55,0.5); }
 .btn-ok:disabled, .btn-pay-now:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
 
+/* ── SUBMIT PULSE (final confirmation button) ── */
+.btn-submit-pulse {
+  animation: submitPulse 1.2s infinite !important;
+  background: linear-gradient(135deg, #059669, #10b981) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  font-weight: 800 !important;
+  font-size: 1.2rem !important;
+}
+@keyframes submitPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(16,185,129,0.7), 0 4px 20px rgba(16,185,129,0.4); transform: scale(1); }
+  50%  { box-shadow: 0 0 0 10px rgba(16,185,129,0), 0 6px 30px rgba(16,185,129,0.6); transform: scale(1.02); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129,0), 0 4px 20px rgba(16,185,129,0.4); transform: scale(1); }
+}
+
 .btn-cncl { width: 100%; background: transparent; border: none; color: var(--text-muted); padding: 15px; cursor: pointer; margin-top: 10px; }
 .btn-cncl:hover { color: var(--text-light); text-decoration: underline; }
 
