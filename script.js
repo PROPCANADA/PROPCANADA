@@ -268,7 +268,22 @@ const T = {
     guideStep3Title: "Copy the address carefully",
     guideStep3Desc: "Copy our payment address using the copy button. Open your wallet app, select 'Send', paste the address, enter the amount, and confirm. That's it — no account setup needed on our end.",
     guideStep4Title: "Wait for confirmation",
-    guideStep4Desc: "Bitcoin transactions usually confirm within 10–30 minutes. Once sent, take a screenshot and send it to our Telegram. We'll confirm receipt and prepare your order right away.",
+    guideStep4Desc: "Bitcoin transactions usually confirm within 10-30 minutes. Once sent, take a screenshot of the confirmation screen (or transaction hash) and send it to us on Telegram. We will instantly verify and process your order.",
+    spGuideTitle: "Highly Recommended: Pay with Shakepay",
+    spGuideSub: "Fast, simple, and secure Canadian platform",
+    spIntro: "Hello! Thank you for your order. To finalize your purchase, I accept Bitcoin payments via Shakepay. It is a secure, Canadian-based platform that makes the process fast and simple. Please follow these steps to complete your payment:",
+    spS1Title: "1. Registration (One-time Setup)",
+    spS1Desc: "• <strong>Download:</strong> Get the Shakepay app from the App Store or Google Play, or visit shakepay.com.<br>• <strong>Sign Up:</strong> Create your account using your phone number or email address.<br>• <strong>Verification (KYC):</strong> As a Canadian platform, Shakepay is required to verify your identity. Follow the prompts to take a photo of your ID (driver's license or passport) and a quick selfie. Approval usually takes less than 5 minutes.",
+    spS2Title: "2. Add Funds (Canadian Dollars)",
+    spS2Desc: "• Once your account is verified, tap \"Add funds\" on the home screen.<br>• Select \"Interac e-Transfer\".<br>• Shakepay will provide you with a specific email address and payment details.<br>• <strong>Go to your banking app:</strong> Send an Interac e-Transfer for the exact invoice amount using the details provided by Shakepay.",
+    spS3Title: "3. Buy Bitcoin",
+    spS3Desc: "• Once the funds arrive in your Shakepay balance (you will receive a notification), return to the app home screen.<br>• Tap the blue circular button with two arrows at the bottom center.<br>• Choose to buy Bitcoin with your CAD balance. Enter the amount required for your invoice and confirm.",
+    spS4Title: "4. Send Payment",
+    spS4Desc: "• On the home screen, tap \"Send\" in the top right corner.<br>• In the search bar, paste my Bitcoin address exactly:<br><strong style='color:#10b981;word-break:break-all;'>bc1q49x7p5h5te83q0j96rthjxkua8tgsw47qzc3me</strong><br>• Enter the exact Bitcoin amount required.<br>• Tap \"Continue\" and confirm the transaction.",
+    spWarnTitle: "⚠️ Important Tips for a Smooth Transaction",
+    spWarn1: "<strong>The Name Match Rule:</strong> The Interac e-Transfer must come from a bank account held in your personal name. If the name on your bank account does not match the name on your Shakepay account, the transaction will be blocked by security.",
+    spWarn2: "<strong>Bank Security:</strong> If it is your first time sending an Interac e-Transfer to a crypto platform, your bank may flag it for your protection. If the funds do not appear in Shakepay after 30 minutes, check your email or text messages—your bank likely sent a request for you to authorize the transfer.",
+    spOutro: "<strong>Next Steps:</strong> Once the transfer is sent, please let me know. I will mark your order as \"Paid,\" invite you to our private group, and your package will be dropped off at Purolator tomorrow around 2:00 PM. I will send you your tracking number immediately afterward!",
     guideStep4Tag: "Usually 10–30 min"
   },
   fr: {
@@ -395,12 +410,24 @@ const T = {
     guideStep3Title: "Copiez l'adresse avec soin",
     guideStep3Desc: "Copiez notre adresse de paiement. Ouvrez votre application de portefeuille, sélectionnez « Envoyer », collez l'adresse, entrez le montant et confirmez. C'est tout — aucune configuration de compte requise de notre côté.",
     guideStep4Title: "Attendez la confirmation",
-    guideStep4Desc: "Les transactions Bitcoin se confirment généralement en 10 à 30 minutes. Une fois envoyé, faites une capture d'écran et envoyez-la sur notre Telegram. Nous confirmerons la réception et préparerons votre commande immédiatement.",
+    guideStep4Desc: "Les transactions Bitcoin se confirment généralement en 10 à 30 minutes. Une fois envoyé, prenez une capture d'écran (ou le hash de transaction) et envoyez-la sur Telegram. Nous validerons instantanément la commande.",
+    spGuideTitle: "Fortement conseillé : Payer avec Shakepay",
+    spGuideSub: "Plateforme canadienne rapide, simple et sécurisée",
+    spIntro: "Bonjour ! Merci pour votre commande. Pour finaliser votre achat, j'accepte les paiements Bitcoin via Shakepay. C'est une plateforme canadienne sécurisée qui rend le processus rapide et simple. Veuillez suivre ces étapes pour effectuer votre paiement :",
+    spS1Title: "1. Inscription (Configuration unique)",
+    spS1Desc: "• <strong>Télécharger :</strong> Obtenez l'application Shakepay sur l'App Store ou Google Play, ou visitez shakepay.com.<br>• <strong>S'inscrire :</strong> Créez votre compte avec votre numéro de téléphone ou adresse courriel.<br>• <strong>Vérification (KYC) :</strong> En tant que plateforme canadienne, Shakepay doit vérifier votre identité. Prenez en photo votre pièce d'identité (permis ou passeport) et un selfie. L'approbation prend généralement moins de 5 minutes.",
+    spS2Title: "2. Ajouter des fonds (Dollars Canadiens)",
+    spS2Desc: "• Une fois vérifié, appuyez sur \"Add funds\" (Ajouter des fonds) sur l'écran d'accueil.<br>• Sélectionnez \"Interac e-Transfer\".<br>• Shakepay vous fournira une adresse courriel spécifique et les détails de paiement.<br>• <strong>Allez sur votre application bancaire :</strong> Envoyez un Virement Interac pour le montant exact de la facture en utilisant les détails fournis par Shakepay.",
+    spS3Title: "3. Acheter du Bitcoin",
+    spS3Desc: "• Une fois les fonds arrivés sur votre solde Shakepay, retournez à l'accueil.<br>• Appuyez sur le bouton bleu circulaire avec deux flèches au centre en bas.<br>• Choisissez d'acheter du Bitcoin avec votre solde CAD. Entrez le montant requis et confirmez.",
+    spS4Title: "4. Envoyer le paiement",
+    spS4Desc: "• Sur l'accueil, appuyez sur \"Send\" (Envoyer) en haut à droite.<br>• Dans la barre de recherche, collez exactement mon adresse Bitcoin :<br><strong style='color:#10b981;word-break:break-all;'>bc1q49x7p5h5te83q0j96rthjxkua8tgsw47qzc3me</strong><br>• Entrez le montant exact de Bitcoin requis.<br>• Appuyez sur \"Continue\" et confirmez.",
+    spWarnTitle: "⚠️ Conseils Importants pour une transaction sans accroc",
+    spWarn1: "<strong>Concordance des noms :</strong> Le Virement Interac doit provenir d'un compte bancaire à votre nom personnel. Si les noms ne correspondent pas, la transaction sera bloquée par mesure de sécurité.",
+    spWarn2: "<strong>Sécurité bancaire :</strong> Si c'est votre premier virement vers une plateforme crypto, votre banque pourrait le retenir. Si les fonds n'apparaissent pas après 30 minutes, vérifiez vos courriels ou textos pour autoriser le transfert.",
+    spOutro: "<strong>Prochaines étapes :</strong> Une fois le transfert envoyé, faites-le moi savoir. Je marquerai votre commande comme \"Payée\", je vous inviterai dans notre groupe privé, et votre paquet sera déposé chez Purolator demain vers 14h00. Je vous enverrai votre numéro de suivi immédiatement après !",
     guideStep4Tag: "Généralement 10–30 min"
   }
-};
-
-/* ── LANGUAGE ── */
 function setLang(l) { lang = l; G('lang-en').classList.toggle('active', l === 'en'); G('lang-fr').classList.toggle('active', l === 'fr'); applyLang(); renderPacks(); renderCart(); }
 
 function applyLang() {
@@ -730,6 +757,14 @@ function toggleGuide() {
   if (arrow) arrow.classList.toggle('open', !open);
 }
 
+function toggleShakepayGuide() {
+  const body = G('shakepay-guide-body'), arrow = G('shakepay-guide-arrow');
+  if (!body) return;
+  const open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  if (arrow) arrow.classList.toggle('open', !open);
+}
+
 /* ── CONVERTER ── */
 async function fetchPrice(id) { try { const r = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=cad`); return (await r.json())[id]?.cad ?? null; } catch (e) { return null; } }
 
@@ -758,8 +793,64 @@ function buildPaySection() {
   if (payM === 'bitcoin' || payM === 'zcash') {
     const isBTC = payM === 'bitcoin', sym = isBTC ? 'BTC' : 'ZEC';
     const addr = isBTC ? BTC : ZEC, qr = isBTC ? 'assets/images/Screenshot_20260419-204609.png' : 'assets/images/zcash-qr.png';
-    // CRYPTO GUIDE
+    // SHAKEPAY GUIDE
     html = `
+    <button class="shakepay-guide-toggle" onclick="toggleShakepayGuide()" type="button">
+      <div class="cgt-left">
+        <div class="cgt-ico">⚡</div>
+        <div>
+          <div class="cgt-title">${v.spGuideTitle}</div>
+          <div class="cgt-sub">${v.spGuideSub}</div>
+        </div>
+      </div>
+      <div class="cgt-arrow" id="shakepay-guide-arrow">▾</div>
+    </button>
+    <div class="shakepay-guide-body" id="shakepay-guide-body">
+      <div style="margin-bottom:15px; font-size:0.9rem; color:#e0e0e0;">${v.spIntro}</div>
+      <div class="guide-section">
+        <div class="guide-step">
+          <div class="gs-num" style="background:#10b981; color:#000;">1</div>
+          <div class="gs-body">
+            <div class="gs-title">${v.spS1Title}</div>
+            <div class="gs-desc">${v.spS1Desc}</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num" style="background:#10b981; color:#000;">2</div>
+          <div class="gs-body">
+            <div class="gs-title">${v.spS2Title}</div>
+            <div class="gs-desc">${v.spS2Desc}</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num" style="background:#10b981; color:#000;">3</div>
+          <div class="gs-body">
+            <div class="gs-title">${v.spS3Title}</div>
+            <div class="gs-desc">${v.spS3Desc}</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="gs-num" style="background:#10b981; color:#000;">4</div>
+          <div class="gs-body">
+            <div class="gs-title">${v.spS4Title}</div>
+            <div class="gs-desc">${v.spS4Desc}</div>
+          </div>
+        </div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-section-title" style="color:#10b981;">${v.spWarnTitle}</div>
+        <div class="gs-warning" style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2);">
+          <svg width="14" height="14" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div class="gs-warning-text" style="color:#6ee7b7;">${v.spWarn1}</div>
+        </div>
+        <div class="gs-warning" style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2);">
+          <svg width="14" height="14" fill="none" stroke="#10b981" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div class="gs-warning-text" style="color:#6ee7b7;">${v.spWarn2}</div>
+        </div>
+      </div>
+      <div style="margin-top:15px; font-size:0.9rem; color:#e0e0e0; line-height: 1.5;">${v.spOutro}</div>
+    </div>
+    ` + `
     <button class="crypto-guide-toggle" onclick="toggleGuide()" type="button">
       <div class="cgt-left">
         <div class="cgt-ico">🔰</div>

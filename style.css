@@ -737,6 +737,47 @@ textarea.fi { resize: vertical; min-height: 80px; }
 .gs-desc { font-size: .8rem; color: var(--text-muted); line-height: 1.55; }
 .gs-warning { display: flex; gap: 8px; align-items: flex-start; padding: 8px 10px; border-radius: 6px; background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.2); margin-bottom: 6px; }
 .gs-warning-text { font-size: .8rem; color: #fca5a5; line-height: 1.5; }
+
+/* ── SHAKEPAY GUIDE ── */
+.shakepay-guide-toggle {
+  width: 100%;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 2px solid rgba(16, 185, 129, 0.6);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.05));
+  position: relative;
+  overflow: hidden;
+  animation: shakepayGlow 2s infinite alternate;
+}
+.shakepay-guide-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.15), transparent);
+  animation: guideShimmer 2.5s infinite;
+}
+@keyframes shakepayGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.0), 0 2px 12px rgba(16, 185, 129, 0.15); }
+  50%       { box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15), 0 4px 20px rgba(16, 185, 129, 0.4); }
+}
+.shakepay-guide-toggle:hover {
+  border-color: #10b981;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.08));
+}
+.shakepay-guide-toggle .cgt-title {
+  color: #10b981;
+}
+.shakepay-guide-toggle .cgt-arrow {
+  color: #10b981;
+}
+.shakepay-guide-body { display: none; background: #0a0a0a; border: 1px solid rgba(16, 185, 129, 0.3); padding: 20px; border-radius: 10px; margin-bottom: 20px; font-size: 0.85rem; color: var(--text-muted); }
+.shakepay-guide-body.open { display: block; }
+
 .gs-tip { display: flex; gap: 8px; align-items: flex-start; padding: 8px 12px; background: rgba(212,175,55,.07); border-left: 3px solid #D4AF37; border-radius: 0 6px 6px 0; }
 .gs-tip-text { font-size: .78rem; color: #c8b880; line-height: 1.5; }
 .gs-tag { display: inline-block; background: rgba(212,175,55,.1); border: 1px solid rgba(212,175,55,.3); border-radius: 20px; padding: 4px 12px; font-size: .75rem; color: #D4AF37; margin-top: 6px; }
