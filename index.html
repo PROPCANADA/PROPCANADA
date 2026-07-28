@@ -347,8 +347,13 @@
     <div class="modal-bd">
       <div class="bonus-callout"><strong id="bonus-lbl">🎁 Crypto Bonus:</strong><span id="bonus-txt"> Pay in Bitcoin and get 1 free 50-bill bundle for every $100 spent. Choose its denomination in the next step.</span></div>
       <button class="popt crypto" onclick="pickPay('bitcoin')"><div class="popt-ico">₿</div><div><span class="popt-title">Bitcoin (BTC)</span><span class="popt-sub" id="ps-btc">Maximum privacy · Crypto bonus</span></div></button>
+      <button class="popt crypto popt-locked" onclick="openZcashLock()" style="opacity:0.7; position:relative;">
+        <div class="popt-ico">Ⓩ</div>
+        <div><span class="popt-title">Zcash (ZEC) <span style="font-size:1rem;">🔒</span></span><span class="popt-sub" id="ps-zec">Accès restreint · Demandez le mot de passe sur Telegram</span></div>
+      </button>
       <button class="popt interac" onclick="pickPay('interac')"><div class="popt-ico">⇄</div><div><span class="popt-title" id="ps-int-h">Interac e-Transfer</span><span class="popt-sub" id="ps-int">Canadian customers · Instant</span></div></button>
       <button class="btn-cncl" onclick="closePayChoice()">Cancel</button>
+
     </div>
   </div>
 </div>
@@ -581,7 +586,30 @@
 </div>
 
 <!-- ████ SUCCESS ████ -->
+<!-- ZCASH PASSWORD MODAL -->
+<div class="modal-overlay" id="m-zcash-lock">
+  <div class="modal-box" style="max-width:400px;">
+    <div class="modal-hd">
+      <div class="mhd-inner"><div class="m-eye">🔒 Accès Restreint</div><div class="m-title">Zcash (ZEC)</div></div>
+      <div class="mhd-actions"><button class="modal-x" onclick="closeZcashLock()">✕</button></div>
+    </div>
+    <div class="modal-bd" style="text-align:center; padding: 24px 20px;">
+      <div style="font-size:2.5rem; margin-bottom:12px;">🔒</div>
+      <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:6px;" id="zcash-lock-desc-en">This payment method is restricted. To get the access password, ask on our Telegram channel.</p>
+      <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:20px; display:none;" id="zcash-lock-desc-fr">Ce mode de paiement est restreint. Pour obtenir le mot de passe d'accès, demandez sur notre canal Telegram.</p>
+      <a href="https://t.me/propbillsofficial1" target="_blank" class="cta-button" style="display:inline-block; margin-bottom:24px; padding:10px 24px; font-size:0.9rem;">📲 Demander sur Telegram</a>
+      <div style="position:relative; margin-bottom:12px;">
+        <input type="password" id="zcash-pwd-input" placeholder="Mot de passe / Password" style="width:100%; padding:12px 16px; background:rgba(255,255,255,0.07); border:1px solid rgba(212,175,55,0.3); border-radius:8px; color:#fff; font-size:1rem; box-sizing:border-box;">
+      </div>
+      <div id="zcash-pwd-error" style="display:none; color:#f87171; font-size:0.85rem; margin-bottom:12px;">❌ Mot de passe incorrect.</div>
+      <button class="btn-pay-now" style="width:100%; padding:14px;" onclick="submitZcashPassword()">Déverrouiller / Unlock</button>
+      <button class="btn-cncl" onclick="closeZcashLock()">Annuler / Cancel</button>
+    </div>
+  </div>
+</div>
+
 <div class="success" id="success-screen">
+
   <div class="s-ring">✓</div>
   <h1 id="s-title">Order Received!</h1>
   <p id="s-desc">Your order and shipping address have been sent to our team.<br>We'll dispatch via Purolator once your payment is confirmed.</p>

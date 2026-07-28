@@ -768,6 +768,35 @@ function toggleShakepayGuide() {
   if (arrow) arrow.classList.toggle('open', !open);
 }
 
+/* ── ZCASH LOCK ── */
+function openZcashLock() {
+  const enDesc = document.getElementById('zcash-lock-desc-en');
+  const frDesc = document.getElementById('zcash-lock-desc-fr');
+  if (enDesc) enDesc.style.display = lang === 'en' ? 'block' : 'none';
+  if (frDesc) frDesc.style.display = lang === 'fr' ? 'block' : 'none';
+  const inp = document.getElementById('zcash-pwd-input');
+  const err = document.getElementById('zcash-pwd-error');
+  if (inp) inp.value = '';
+  if (err) err.style.display = 'none';
+  document.getElementById('m-zcash-lock').classList.add('open');
+}
+function closeZcashLock() {
+  document.getElementById('m-zcash-lock').classList.remove('open');
+}
+function submitZcashPassword() {
+  const inp = document.getElementById('zcash-pwd-input');
+  const err = document.getElementById('zcash-pwd-error');
+  if ((inp?.value || '').trim().toLowerCase() === 'admin') {
+    closeZcashLock();
+    closePayChoice();
+    pickPay('zcash');
+  } else {
+    if (err) err.style.display = 'block';
+    if (inp) { inp.value = ''; inp.focus(); }
+  }
+}
+
+
 /* ── CONVERTER ── */
 async function fetchPrice(id) { try { const r = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=cad`); return (await r.json())[id]?.cad ?? null; } catch (e) { return null; } }
 
@@ -1079,18 +1108,24 @@ function onCountryChange(val) {
   if (warn) { warn.classList.toggle('show', !isCA && (val || '').trim().length > 2); }
 }
 
-/* ── RATE LIMITING (2 submissions per hour) ── */
+/* ── RATE LIMITING (10 submissions per day, min 5 min between each) ── */
 function checkRateLimit() {
-  if (localStorage.getItem('pbs_dev_autofill') === 'true') return true; // BYPASS FOR DEV TESTS
+  if (localStorage.getItem('pbs_dev_autofill') === 'true') return { ok: true }; // BYPASS FOR DEV
   const key = 'pbs_submissions';
-  const now = Date.now(), hour = 3600000;
+  const now = Date.now();
+  const day = 86400000;    // 24h
+  const cooldown = 300000; // 5 minutes
   let log = [];
   try { log = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) { }
-  log = log.filter(t => now - t < hour);
-  if (log.length >= 2) return false;
+  log = log.filter(t => now - t < day); // garder seulement les 24 dernières heures
+  if (log.length >= 10) return { ok: false, reason: 'daily' };
+  if (log.length > 0 && now - log[log.length - 1] < cooldown) {
+    const remaining = Math.ceil((cooldown - (now - log[log.length - 1])) / 60000);
+    return { ok: false, reason: 'cooldown', remaining };
+  }
   log.push(now);
   try { localStorage.setItem(key, JSON.stringify(log)); } catch (e) { }
-  return true;
+  return { ok: true };
 }
 
 /* ── SUBMIT ── */
@@ -1098,10 +1133,18 @@ document.getElementById('order-form').addEventListener('submit', async function 
   e.preventDefault();
   e.stopPropagation();
 
-  if (!checkRateLimit()) {
-    const msg = lang === 'en'
-      ? 'You have reached the limit of 2 orders per hour. Please try again later or contact us on Telegram.'
-      : 'Vous avez atteint la limite de 2 commandes par heure. Réessayez plus tard ou contactez-nous sur Telegram.';
+  const rateCheck = checkRateLimit();
+  if (rateCheck !== true && !rateCheck?.ok) {
+    let msg;
+    if (rateCheck.reason === 'cooldown') {
+      msg = lang === 'en'
+        ? `Please wait ${rateCheck.remaining} more minute(s) before placing another order.`
+        : `Veuillez attendre encore ${rateCheck.remaining} minute(s) avant de passer une autre commande.`;
+    } else {
+      msg = lang === 'en'
+        ? 'You have reached the daily limit of 10 orders. Please contact us on Telegram.'
+        : 'Vous avez atteint la limite de 10 commandes par jour. Contactez-nous sur Telegram.';
+    }
     alert(msg);
     return;
   }
